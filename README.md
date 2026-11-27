@@ -69,4 +69,4 @@ Los informes completos están en `resultados/harness/gold_dev/`.
 
 Análisis completo en `resultados/analisis_dev/` y `resultados/analisis_test50/`; salidas crudas en
 `resultados/generacion/`; informes del harness en `resultados/harness/`. Los resultados con la primera
-versión del conversor (sin re-indentación relativa) se conservan como `*_v1` en el entorno de validación.
+versión del conversor (sin re-indentación relativa) se conservan en `resultados/conversor_v1/`.

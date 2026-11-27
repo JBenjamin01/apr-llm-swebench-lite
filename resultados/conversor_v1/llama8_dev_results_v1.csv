@@ -1,0 +1,16 @@
+instance_id,model,e1,e2,cause,repo,prompt_tokens,output_tokens,file_tokens,file_lines,truncated,gen_time_s,energy_wh,mean_power_w,peak_mem_gb,finish_reason,e3,e4,e5,resolved,n_f2p_fail,n_p2p_fail,n_p2p_fail_rerun,resolved_harness
+sqlfluff__sqlfluff-1625,llama8,False,False,no_blocks,sqlfluff/sqlfluff,1918,731,1498,220,False,42.251,0.7694,65.5,14.14,stop,False,False,False,False,,,,
+sqlfluff__sqlfluff-2419,llama8,False,False,no_blocks,sqlfluff/sqlfluff,875,412,436,63,False,22.076,0.4149,67.6,14.14,stop,False,False,False,False,,,,
+sqlfluff__sqlfluff-1733,llama8,False,False,no_blocks,sqlfluff/sqlfluff,934,383,377,69,False,20.789,0.3913,66.8,14.14,stop,False,False,False,False,,,,
+sqlfluff__sqlfluff-1517,llama8,False,False,no_blocks,sqlfluff/sqlfluff,1754,119,629,85,False,8.656,0.1731,68.7,14.14,stop,False,False,False,False,,,,
+sqlfluff__sqlfluff-1763,llama8,False,False,truncated_output,sqlfluff/sqlfluff,6251,2048,4266,500,False,125.701,2.3312,66.9,14.98,length,False,False,False,False,,,,
+marshmallow-code__marshmallow-1359,llama8,False,False,no_blocks,marshmallow-code/marshmallow,13731,1176,12999,1694,False,165.922,3.1144,67.3,15.45,stop,False,False,False,False,,,,
+marshmallow-code__marshmallow-1343,llama8,False,False,no_blocks,marshmallow-code/marshmallow,9143,433,8315,969,False,61.771,1.1722,67.8,15.45,stop,False,False,False,False,,,,
+pylint-dev__astroid-1978,llama8,False,False,no_blocks,pylint-dev/astroid,5086,514,4611,580,False,39.698,0.7248,66.3,15.45,stop,False,False,False,False,,,,
+pylint-dev__astroid-1333,llama8,True,True,,pylint-dev/astroid,6338,317,5651,675,False,35.629,0.6457,64.3,15.45,stop,True,False,True,False,1,46,46,False
+pylint-dev__astroid-1196,llama8,False,False,no_blocks,pylint-dev/astroid,2859,722,37831,5435,True,42.558,0.7928,66.0,15.45,stop,False,False,False,False,,,,
+pylint-dev__astroid-1866,llama8,False,False,no_blocks,pylint-dev/astroid,8251,425,7509,1003,False,53.677,1.0072,68.0,15.45,stop,False,False,False,False,,,,
+pylint-dev__astroid-1268,llama8,True,False,search_not_found,pylint-dev/astroid,6501,831,5980,660,False,62.927,1.177,66.9,15.45,stop,False,False,False,False,,,,
+pydicom__pydicom-1694,llama8,False,False,no_blocks,pydicom/pydicom,24348,936,23635,2917,False,337.358,6.3121,67.3,15.45,stop,False,False,False,False,,,,
+pydicom__pydicom-901,llama8,False,False,no_blocks,pydicom/pydicom,1420,66,968,133,False,5.124,0.1064,62.9,15.45,stop,False,False,False,False,,,,
+pydicom__pydicom-1256,llama8,False,False,no_blocks,pydicom/pydicom,2577,739,2028,274,False,42.598,0.7926,67.5,15.45,stop,False,False,False,False,,,,
