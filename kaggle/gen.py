@@ -15,7 +15,7 @@ import json
 import os
 import platform
 import re
-import shutil
+
 import sys
 import threading
 import time
@@ -213,6 +213,9 @@ def main():
     ap.add_argument("--split", default="dev", choices=["dev", "test"])
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--ids", default="", help="lista de instance_id separada por comas")
+    ap.add_argument("--sample", type=int, default=0,
+                    help="muestra aleatoria simple de n instancias (semilla fija)")
+    ap.add_argument("--sample-seed", type=int, default=2026)
     ap.add_argument("--gpu-util", type=float, default=0.92)
     ap.add_argument("--kv", default=None, help="sobrescribe kv_cache_dtype")
     args = ap.parse_args()
@@ -222,11 +225,20 @@ def main():
     hf_id, tp, kv = MODELS[args.model]
     kv = args.kv or kv
     os.makedirs(OUT_DIR, exist_ok=True)
-    stem = f"{OUT_DIR}/{args.model}_{args.split}"
+    tag = f"{args.split}{args.sample}" if args.sample else args.split
+    stem = f"{OUT_DIR}/{args.model}_{tag}"
     out_path, meta_path = stem + ".jsonl", stem + "_meta.json"
 
     ds = load_dataset("princeton-nlp/SWE-bench_Lite", split=args.split)
     rows = list(ds)
+    if args.sample:
+        import random
+
+        ids = sorted(r["instance_id"] for r in rows)
+        chosen = set(random.Random(args.sample_seed).sample(ids, args.sample))
+        rows = [r for r in rows if r["instance_id"] in chosen]
+        with open(f"{OUT_DIR}/sample_{tag}_seed{args.sample_seed}.txt", "w") as f:
+            f.write("\n".join(sorted(chosen)) + "\n")
     if args.ids:
         wanted = set(args.ids.split(","))
         rows = [r for r in rows if r["instance_id"] in wanted]
@@ -252,6 +264,7 @@ def main():
 
     meta = {
         "model_key": args.model, "hf_id": hf_id, "split": args.split,
+        "sample": args.sample, "sample_seed": args.sample_seed if args.sample else None,
         "tensor_parallel": tp, "kv_cache_dtype": kv, "quantization": "awq",
         "dtype": "float16", "max_model_len": MAX_CTX, "max_tokens": MAX_OUT,
         "temperature": 0.0, "seed": SEED, "gpu_memory_utilization": args.gpu_util,
@@ -332,7 +345,6 @@ def main():
     mon.stop()
     meta["finished"] = time.strftime("%Y-%m-%d %H:%M:%S")
     json.dump(meta, open(meta_path, "w"), indent=2)
-    shutil.rmtree(os.path.join(os.environ["HF_HOME"], "hub"), ignore_errors=True)
 
 
 if __name__ == "__main__":
