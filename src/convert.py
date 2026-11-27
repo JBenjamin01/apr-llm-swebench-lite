@@ -6,6 +6,10 @@ Etapas:
                    en su defecto, tolerante a espacios), bloques sin solape,
                    diff no vacio y `git apply --check` sin errores.
 
+Ajuste congelado tras la prueba de viabilidad: los marcadores <<<<<<< y >>>>>>>
+se aceptan sin las palabras SEARCH/REPLACE (Llama-3.1-8B las omitia); el
+separador ======= sigue siendo obligatorio.
+
 Causas de fallo registradas (para la clasificacion de la Seccion IV-F):
   E1: no_blocks, truncated_output
   E2: wrong_path, search_not_found, search_ambiguous, overlap, empty_diff,
@@ -21,11 +25,11 @@ BLOCK_RE = re.compile(
     r"^[ \t]*(?:```[^\n]*\n)?"          # bandera de codigo opcional
     r"(?:(?P<path>[^\n<>=`]*?)[ \t]*\n)?"  # linea con la ruta (opcional)
     r"(?:```[^\n]*\n)?"
-    r"<{5,9} ?SEARCH[ \t]*\n"
+    r"<{5,9} ?(?:SEARCH)?[ \t]*\n"       # SEARCH opcional (ajuste tras el piloto)
     r"(?P<search>.*?)"
-    r"^={5,9}[ \t]*\n"
+    r"^={5,9}[ \t]*\n"                   # el separador sigue siendo obligatorio
     r"(?P<replace>.*?)"
-    r"^>{5,9} ?REPLACE[ \t]*$",
+    r"^>{5,9} ?(?:REPLACE)?[ \t]*$",
     re.S | re.M,
 )
 

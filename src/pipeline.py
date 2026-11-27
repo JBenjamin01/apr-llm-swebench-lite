@@ -67,6 +67,11 @@ def cmd_prepare(a):
     work.mkdir(parents=True, exist_ok=True)
     cache = work / "files"
     gens = load_jsonl(a.gen)
+    if a.valid:
+        valid = set(Path(a.valid).read_text().split())
+        excl = [g["instance_id"] for g in gens if g["instance_id"] not in valid]
+        gens = [g for g in gens if g["instance_id"] in valid]
+        print(f"excluidas por verificacion gold: {len(excl)}")
     model = gens[0]["model"]
     stem = Path(a.gen).stem
     stages, preds = [], []
@@ -209,6 +214,7 @@ def main():
         p.add_argument("--logs", default="logs")
         p.add_argument("--run-id")
         p.add_argument("--rerun-id")
+        p.add_argument("--valid", help="archivo con los instance_id validos (gold resuelto)")
     a = ap.parse_args()
     {"prepare": cmd_prepare, "collect": cmd_collect, "flaky": cmd_flaky}[a.cmd](a)
 
