@@ -1,0 +1,79 @@
+2026-11-27 06:09:01,639 - INFO - Image not found locally, attempting to pull...
+2026-11-27 06:09:41,496 - INFO - Creating container for pvlib__pvlib-python-1854...
+2026-11-27 06:09:42,728 - INFO - Container for pvlib__pvlib-python-1854 created: b1b4a0aa123e8a7c4a36ea6d0a2b3ea7248642d6cb8942db877f7b411e1335bc
+2026-11-27 06:09:42,960 - INFO - Container for pvlib__pvlib-python-1854 started: b1b4a0aa123e8a7c4a36ea6d0a2b3ea7248642d6cb8942db877f7b411e1335bc
+2026-11-27 06:09:42,960 - INFO - Intermediate patch for pvlib__pvlib-python-1854 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1854/patch.diff, now applying to container...
+2026-11-27 06:09:43,183 - INFO - >>>>> Applied Patch:
+Checking patch pvlib/pvsystem.py...
+Applied patch pvlib/pvsystem.py cleanly.
+
+2026-11-27 06:09:44,013 - INFO - Git diff before:
+diff --git a/pvlib/pvsystem.py b/pvlib/pvsystem.py
+index c277a77..35f39a1 100644
+--- a/pvlib/pvsystem.py
++++ b/pvlib/pvsystem.py
+@@ -101,10 +101,11 @@ class PVSystem:
+ 
+     Parameters
+     ----------
+-    arrays : iterable of Array, optional
+-        List of arrays that are part of the system. If not specified
+-        a single array is created from the other parameters (e.g.
+-        `surface_tilt`, `surface_azimuth`). Must contain at least one Array,
++    arrays : Array or iterable of Array, optional
++        An Array or list of arrays that are part of the system. If not
++        specified a single array is created from the other parameters (e.g.
++        `surface_tilt`, `surface_azimuth`). If specified as a list, the list
++        must contain at least one Array;
+         if length of arrays is 0 a ValueError is raised. If `arrays` is
+         specified the following PVSystem parameters are ignored:
+ 
+@@ -220,6 +221,8 @@ class PVSystem:
+                 strings_per_inverter,
+                 array_losses_parameters,
+             ),)
++        elif isinstance(arrays, Array):
++            self.arrays = (arrays,)
+         elif len(arrays) == 0:
+             raise ValueError("PVSystem must have at least one Array. "
+                              "If you want to create a PVSystem instance "
+2026-11-27 06:09:44,014 - INFO - Eval script for pvlib__pvlib-python-1854 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1854/eval.sh; copying to container...
+2026-11-27 06:09:56,490 - INFO - Test runtime: 12.35 seconds
+2026-11-27 06:09:56,490 - INFO - Test output for pvlib__pvlib-python-1854 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1854/test_output.txt
+2026-11-27 06:09:57,228 - INFO - Git diff after:
+diff --git a/pvlib/pvsystem.py b/pvlib/pvsystem.py
+index c277a77..35f39a1 100644
+--- a/pvlib/pvsystem.py
++++ b/pvlib/pvsystem.py
+@@ -101,10 +101,11 @@ class PVSystem:
+ 
+     Parameters
+     ----------
+-    arrays : iterable of Array, optional
+-        List of arrays that are part of the system. If not specified
+-        a single array is created from the other parameters (e.g.
+-        `surface_tilt`, `surface_azimuth`). Must contain at least one Array,
++    arrays : Array or iterable of Array, optional
++        An Array or list of arrays that are part of the system. If not
++        specified a single array is created from the other parameters (e.g.
++        `surface_tilt`, `surface_azimuth`). If specified as a list, the list
++        must contain at least one Array;
+         if length of arrays is 0 a ValueError is raised. If `arrays` is
+         specified the following PVSystem parameters are ignored:
+ 
+@@ -220,6 +221,8 @@ class PVSystem:
+                 strings_per_inverter,
+                 array_losses_parameters,
+             ),)
++        elif isinstance(arrays, Array):
++            self.arrays = (arrays,)
+         elif len(arrays) == 0:
+             raise ValueError("PVSystem must have at least one Array. "
+                              "If you want to create a PVSystem instance "
+2026-11-27 06:09:57,228 - INFO - Grading answer for pvlib__pvlib-python-1854...
+2026-11-27 06:09:57,231 - INFO - report: {'pvlib__pvlib-python-1854': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False, 'infra_failure': False}}
+Result for pvlib__pvlib-python-1854: resolved: False
+2026-11-27 06:09:57,231 - INFO - Attempting to stop container sweb.eval.pvlib__pvlib-python-1854.gold_dev...
+2026-11-27 06:10:12,878 - INFO - Container sweb.eval.pvlib__pvlib-python-1854.gold_dev stopped successfully.
+2026-11-27 06:10:12,878 - INFO - Attempting to remove container sweb.eval.pvlib__pvlib-python-1854.gold_dev...
+2026-11-27 06:10:12,947 - INFO - Container sweb.eval.pvlib__pvlib-python-1854.gold_dev removed successfully.

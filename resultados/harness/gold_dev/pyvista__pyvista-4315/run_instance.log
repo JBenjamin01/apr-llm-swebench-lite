@@ -1,0 +1,103 @@
+2026-11-27 06:12:02,179 - INFO - Image not found locally, attempting to pull...
+2026-11-27 06:13:52,187 - INFO - Creating container for pyvista__pyvista-4315...
+2026-11-27 06:13:53,961 - INFO - Container for pyvista__pyvista-4315 created: 5cfa37e4dd5524dbc06add76fa39608bcb34a23c9888b7f44ffebb9c5010e068
+2026-11-27 06:13:54,153 - INFO - Container for pyvista__pyvista-4315 started: 5cfa37e4dd5524dbc06add76fa39608bcb34a23c9888b7f44ffebb9c5010e068
+2026-11-27 06:13:54,154 - INFO - Intermediate patch for pyvista__pyvista-4315 written to logs/run_evaluation/gold_dev/gold/pyvista__pyvista-4315/patch.diff, now applying to container...
+2026-11-27 06:13:54,289 - INFO - >>>>> Applied Patch:
+Checking patch pyvista/core/grid.py...
+Applied patch pyvista/core/grid.py cleanly.
+
+2026-11-27 06:13:55,158 - INFO - Git diff before:
+diff --git a/pyvista/core/grid.py b/pyvista/core/grid.py
+index 6ce23688..5248dd3f 100644
+--- a/pyvista/core/grid.py
++++ b/pyvista/core/grid.py
+@@ -135,23 +135,30 @@ class RectilinearGrid(_vtk.vtkRectilinearGrid, Grid, RectilinearGridFilters):
+                     self.shallow_copy(args[0])
+             elif isinstance(args[0], (str, pathlib.Path)):
+                 self._from_file(args[0], **kwargs)
+-            elif isinstance(args[0], np.ndarray):
+-                self._from_arrays(args[0], None, None, check_duplicates)
++            elif isinstance(args[0], (np.ndarray, Sequence)):
++                self._from_arrays(np.asanyarray(args[0]), None, None, check_duplicates)
+             else:
+                 raise TypeError(f'Type ({type(args[0])}) not understood by `RectilinearGrid`')
+ 
+         elif len(args) == 3 or len(args) == 2:
+-            arg0_is_arr = isinstance(args[0], np.ndarray)
+-            arg1_is_arr = isinstance(args[1], np.ndarray)
++            arg0_is_arr = isinstance(args[0], (np.ndarray, Sequence))
++            arg1_is_arr = isinstance(args[1], (np.ndarray, Sequence))
+             if len(args) == 3:
+-                arg2_is_arr = isinstance(args[2], np.ndarray)
++                arg2_is_arr = isinstance(args[2], (np.ndarray, Sequence))
+             else:
+                 arg2_is_arr = False
+ 
+             if all([arg0_is_arr, arg1_is_arr, arg2_is_arr]):
+-                self._from_arrays(args[0], args[1], args[2], check_duplicates)
++                self._from_arrays(
++                    np.asanyarray(args[0]),
++                    np.asanyarray(args[1]),
++                    np.asanyarray(args[2]),
++                    check_duplicates,
++                )
+             elif all([arg0_is_arr, arg1_is_arr]):
+-                self._from_arrays(args[0], args[1], None, check_duplicates)
++                self._from_arrays(
++                    np.asanyarray(args[0]), np.asanyarray(args[1]), None, check_duplicates
++                )
+             else:
+                 raise TypeError("Arguments not understood by `RectilinearGrid`.")
+2026-11-27 06:13:55,158 - INFO - Eval script for pyvista__pyvista-4315 written to logs/run_evaluation/gold_dev/gold/pyvista__pyvista-4315/eval.sh; copying to container...
+2026-11-27 06:14:02,016 - INFO - Test runtime: 6.78 seconds
+2026-11-27 06:14:02,017 - INFO - Test output for pyvista__pyvista-4315 written to logs/run_evaluation/gold_dev/gold/pyvista__pyvista-4315/test_output.txt
+2026-11-27 06:14:02,075 - INFO - Git diff after:
+diff --git a/pyvista/core/grid.py b/pyvista/core/grid.py
+index 6ce23688..5248dd3f 100644
+--- a/pyvista/core/grid.py
++++ b/pyvista/core/grid.py
+@@ -135,23 +135,30 @@ class RectilinearGrid(_vtk.vtkRectilinearGrid, Grid, RectilinearGridFilters):
+                     self.shallow_copy(args[0])
+             elif isinstance(args[0], (str, pathlib.Path)):
+                 self._from_file(args[0], **kwargs)
+-            elif isinstance(args[0], np.ndarray):
+-                self._from_arrays(args[0], None, None, check_duplicates)
++            elif isinstance(args[0], (np.ndarray, Sequence)):
++                self._from_arrays(np.asanyarray(args[0]), None, None, check_duplicates)
+             else:
+                 raise TypeError(f'Type ({type(args[0])}) not understood by `RectilinearGrid`')
+ 
+         elif len(args) == 3 or len(args) == 2:
+-            arg0_is_arr = isinstance(args[0], np.ndarray)
+-            arg1_is_arr = isinstance(args[1], np.ndarray)
++            arg0_is_arr = isinstance(args[0], (np.ndarray, Sequence))
++            arg1_is_arr = isinstance(args[1], (np.ndarray, Sequence))
+             if len(args) == 3:
+-                arg2_is_arr = isinstance(args[2], np.ndarray)
++                arg2_is_arr = isinstance(args[2], (np.ndarray, Sequence))
+             else:
+                 arg2_is_arr = False
+ 
+             if all([arg0_is_arr, arg1_is_arr, arg2_is_arr]):
+-                self._from_arrays(args[0], args[1], args[2], check_duplicates)
++                self._from_arrays(
++                    np.asanyarray(args[0]),
++                    np.asanyarray(args[1]),
++                    np.asanyarray(args[2]),
++                    check_duplicates,
++                )
+             elif all([arg0_is_arr, arg1_is_arr]):
+-                self._from_arrays(args[0], args[1], None, check_duplicates)
++                self._from_arrays(
++                    np.asanyarray(args[0]), np.asanyarray(args[1]), None, check_duplicates
++                )
+             else:
+                 raise TypeError("Arguments not understood by `RectilinearGrid`.")
+2026-11-27 06:14:02,076 - INFO - Grading answer for pyvista__pyvista-4315...
+2026-11-27 06:14:02,078 - INFO - report: {'pyvista__pyvista-4315': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False, 'infra_failure': False}}
+Result for pyvista__pyvista-4315: resolved: False
+2026-11-27 06:14:02,078 - INFO - Attempting to stop container sweb.eval.pyvista__pyvista-4315.gold_dev...
+2026-11-27 06:14:18,463 - INFO - Container sweb.eval.pyvista__pyvista-4315.gold_dev stopped successfully.
+2026-11-27 06:14:18,463 - INFO - Attempting to remove container sweb.eval.pyvista__pyvista-4315.gold_dev...
+2026-11-27 06:14:18,532 - INFO - Container sweb.eval.pyvista__pyvista-4315.gold_dev removed successfully.

@@ -1,0 +1,77 @@
+2026-11-27 06:12:14,900 - INFO - Image not found locally, attempting to pull...
+2026-11-27 06:12:52,961 - INFO - Creating container for sqlfluff__sqlfluff-1517...
+2026-11-27 06:12:54,618 - INFO - Container for sqlfluff__sqlfluff-1517 created: d17ba48dd4281389ee41f07618cf546cb09fc4d05214c5dd7aa332ff4c5d119c
+2026-11-27 06:12:54,819 - INFO - Container for sqlfluff__sqlfluff-1517 started: d17ba48dd4281389ee41f07618cf546cb09fc4d05214c5dd7aa332ff4c5d119c
+2026-11-27 06:12:54,820 - INFO - Intermediate patch for sqlfluff__sqlfluff-1517 written to logs/run_evaluation/gold_dev/gold/sqlfluff__sqlfluff-1517/patch.diff, now applying to container...
+2026-11-27 06:12:54,940 - INFO - >>>>> Applied Patch:
+Checking patch src/sqlfluff/core/parser/helpers.py...
+Applied patch src/sqlfluff/core/parser/helpers.py cleanly.
+
+2026-11-27 06:12:55,112 - INFO - Git diff before:
+diff --git a/src/sqlfluff/core/parser/helpers.py b/src/sqlfluff/core/parser/helpers.py
+index 718b673ed..04f19ed35 100644
+--- a/src/sqlfluff/core/parser/helpers.py
++++ b/src/sqlfluff/core/parser/helpers.py
+@@ -2,6 +2,7 @@
+ 
+ from typing import Tuple, List, Any, Iterator, TYPE_CHECKING
+ 
++from sqlfluff.core.errors import SQLParseError
+ from sqlfluff.core.string_helpers import curtail_string
+ 
+ if TYPE_CHECKING:
+@@ -26,11 +27,11 @@ def check_still_complete(
+     """Check that the segments in are the same as the segments out."""
+     initial_str = join_segments_raw(segments_in)
+     current_str = join_segments_raw(matched_segments + unmatched_segments)
+-    if initial_str != current_str:  # pragma: no cover
+-        raise RuntimeError(
+-            "Dropped elements in sequence matching! {!r} != {!r}".format(
+-                initial_str, current_str
+-            )
++
++    if initial_str != current_str:
++        raise SQLParseError(
++            f"Could not parse: {current_str}",
++            segment=unmatched_segments[0],
+         )
+     return True
+2026-11-27 06:12:55,113 - INFO - Eval script for sqlfluff__sqlfluff-1517 written to logs/run_evaluation/gold_dev/gold/sqlfluff__sqlfluff-1517/eval.sh; copying to container...
+2026-11-27 06:12:58,809 - INFO - Test runtime: 3.63 seconds
+2026-11-27 06:12:58,811 - INFO - Test output for sqlfluff__sqlfluff-1517 written to logs/run_evaluation/gold_dev/gold/sqlfluff__sqlfluff-1517/test_output.txt
+2026-11-27 06:12:58,868 - INFO - Git diff after:
+diff --git a/src/sqlfluff/core/parser/helpers.py b/src/sqlfluff/core/parser/helpers.py
+index 718b673ed..04f19ed35 100644
+--- a/src/sqlfluff/core/parser/helpers.py
++++ b/src/sqlfluff/core/parser/helpers.py
+@@ -2,6 +2,7 @@
+ 
+ from typing import Tuple, List, Any, Iterator, TYPE_CHECKING
+ 
++from sqlfluff.core.errors import SQLParseError
+ from sqlfluff.core.string_helpers import curtail_string
+ 
+ if TYPE_CHECKING:
+@@ -26,11 +27,11 @@ def check_still_complete(
+     """Check that the segments in are the same as the segments out."""
+     initial_str = join_segments_raw(segments_in)
+     current_str = join_segments_raw(matched_segments + unmatched_segments)
+-    if initial_str != current_str:  # pragma: no cover
+-        raise RuntimeError(
+-            "Dropped elements in sequence matching! {!r} != {!r}".format(
+-                initial_str, current_str
+-            )
++
++    if initial_str != current_str:
++        raise SQLParseError(
++            f"Could not parse: {current_str}",
++            segment=unmatched_segments[0],
+         )
+     return True
+2026-11-27 06:12:58,869 - INFO - Grading answer for sqlfluff__sqlfluff-1517...
+2026-11-27 06:12:58,892 - INFO - report: {'sqlfluff__sqlfluff-1517': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'infra_failure': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['test/dialects/ansi_test.py::test__dialect__ansi_multiple_semicolons[select'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test/dialects/ansi_test.py::test__dialect__ansi__file_lex[a', 'test/dialects/ansi_test.py::test__dialect__ansi__file_lex[b.c-res1]', 'test/dialects/ansi_test.py::test__dialect__ansi__file_lex[abc', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectKeywordSegment-select]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[NakedIdentifierSegment-online_sales]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[BareFunctionSegment-current_timestamp]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[FunctionSegment-current_timestamp()]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[NumericLiteralSegment-1000.0]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-online_sales', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[IntervalExpressionSegment-INTERVAL', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-CASE', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-CAST(ROUND(online_sales', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-name', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-MIN', "test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-DATE_ADD(CURRENT_DATE('America/New_York'),", 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-my_array[1]]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-my_array[OFFSET(1)]]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-my_array[5:8]]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-4', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-bits[OFFSET(0)]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-(count_18_24', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-count_18_24', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectStatementSegment-SELECT', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-t.val/t.id]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-CAST(num', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-a.*]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-a.b.*]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-a.b.c.*]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ObjectReferenceSegment-a..c.*]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment--some_variable]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment--', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-concat(left(uaid,', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-c', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-c', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[ExpressionSegment-NULL::INT]', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[SelectClauseElementSegment-NULL::INT', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_parses[TruncateStatementSegment-TRUNCATE', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_not_match[ObjectReferenceSegment-\\n', 'test/dialects/ansi_test.py::test__dialect__ansi_specific_segment_not_parse[SELECT', 'test/dialects/ansi_test.py::test__dialect__ansi_is_whitespace', 'test/dialects/ansi_test.py::test__dialect__ansi_parse_indented_joins[select', 'test/dialects/ansi_test.py::test__dialect__ansi_multiple_semicolons[;;-Line'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sqlfluff__sqlfluff-1517: resolved: True
+2026-11-27 06:12:58,892 - INFO - Attempting to stop container sweb.eval.sqlfluff__sqlfluff-1517.gold_dev...
+2026-11-27 06:13:14,682 - INFO - Container sweb.eval.sqlfluff__sqlfluff-1517.gold_dev stopped successfully.
+2026-11-27 06:13:14,682 - INFO - Attempting to remove container sweb.eval.sqlfluff__sqlfluff-1517.gold_dev...
+2026-11-27 06:13:14,771 - INFO - Container sweb.eval.sqlfluff__sqlfluff-1517.gold_dev removed successfully.

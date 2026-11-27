@@ -1,0 +1,105 @@
+2026-11-27 06:08:09,216 - INFO - Image not found locally, attempting to pull...
+2026-11-27 06:08:44,363 - INFO - Creating container for pvlib__pvlib-python-1707...
+2026-11-27 06:08:45,351 - INFO - Container for pvlib__pvlib-python-1707 created: 7eb505de20cacf1048bc7efb44ffde51b7c350ed4c8217ff4e0613c744e8a159
+2026-11-27 06:08:45,536 - INFO - Container for pvlib__pvlib-python-1707 started: 7eb505de20cacf1048bc7efb44ffde51b7c350ed4c8217ff4e0613c744e8a159
+2026-11-27 06:08:45,536 - INFO - Intermediate patch for pvlib__pvlib-python-1707 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1707/patch.diff, now applying to container...
+2026-11-27 06:08:45,654 - INFO - >>>>> Applied Patch:
+Checking patch pvlib/iam.py...
+Applied patch pvlib/iam.py cleanly.
+
+2026-11-27 06:08:46,065 - INFO - Git diff before:
+diff --git a/pvlib/iam.py b/pvlib/iam.py
+index 3eaa6b4..ca8f894 100644
+--- a/pvlib/iam.py
++++ b/pvlib/iam.py
+@@ -175,8 +175,12 @@ def physical(aoi, n=1.526, K=4.0, L=0.002, *, n_ar=None):
+     n2costheta2 = n2 * costheta
+ 
+     # reflectance of s-, p-polarized, and normal light by the first interface
+-    rho12_s = ((n1costheta1 - n2costheta2) / (n1costheta1 + n2costheta2)) ** 2
+-    rho12_p = ((n1costheta2 - n2costheta1) / (n1costheta2 + n2costheta1)) ** 2
++    with np.errstate(divide='ignore', invalid='ignore'):
++        rho12_s = \
++            ((n1costheta1 - n2costheta2) / (n1costheta1 + n2costheta2)) ** 2
++        rho12_p = \
++            ((n1costheta2 - n2costheta1) / (n1costheta2 + n2costheta1)) ** 2
++
+     rho12_0 = ((n1 - n2) / (n1 + n2)) ** 2
+ 
+     # transmittance through the first interface
+@@ -208,13 +212,22 @@ def physical(aoi, n=1.526, K=4.0, L=0.002, *, n_ar=None):
+         tau_0 *= (1 - rho23_0) / (1 - rho23_0 * rho12_0)
+ 
+     # transmittance after absorption in the glass
+-    tau_s *= np.exp(-K * L / costheta)
+-    tau_p *= np.exp(-K * L / costheta)
++    with np.errstate(divide='ignore', invalid='ignore'):
++        tau_s *= np.exp(-K * L / costheta)
++        tau_p *= np.exp(-K * L / costheta)
++
+     tau_0 *= np.exp(-K * L)
+ 
+     # incidence angle modifier
+     iam = (tau_s + tau_p) / 2 / tau_0
+ 
++    # for light coming from behind the plane, none can enter the module
++    # when n2 > 1, this is already the case
++    if np.isclose(n2, 1).any():
++        iam = np.where(aoi >= 90, 0, iam)
++        if isinstance(aoi, pd.Series):
++            iam = pd.Series(iam, index=aoi.index)
++
+     return iam
+2026-11-27 06:08:46,065 - INFO - Eval script for pvlib__pvlib-python-1707 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1707/eval.sh; copying to container...
+2026-11-27 06:08:50,830 - INFO - Test runtime: 4.70 seconds
+2026-11-27 06:08:50,831 - INFO - Test output for pvlib__pvlib-python-1707 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1707/test_output.txt
+2026-11-27 06:08:50,883 - INFO - Git diff after:
+diff --git a/pvlib/iam.py b/pvlib/iam.py
+index 3eaa6b4..ca8f894 100644
+--- a/pvlib/iam.py
++++ b/pvlib/iam.py
+@@ -175,8 +175,12 @@ def physical(aoi, n=1.526, K=4.0, L=0.002, *, n_ar=None):
+     n2costheta2 = n2 * costheta
+ 
+     # reflectance of s-, p-polarized, and normal light by the first interface
+-    rho12_s = ((n1costheta1 - n2costheta2) / (n1costheta1 + n2costheta2)) ** 2
+-    rho12_p = ((n1costheta2 - n2costheta1) / (n1costheta2 + n2costheta1)) ** 2
++    with np.errstate(divide='ignore', invalid='ignore'):
++        rho12_s = \
++            ((n1costheta1 - n2costheta2) / (n1costheta1 + n2costheta2)) ** 2
++        rho12_p = \
++            ((n1costheta2 - n2costheta1) / (n1costheta2 + n2costheta1)) ** 2
++
+     rho12_0 = ((n1 - n2) / (n1 + n2)) ** 2
+ 
+     # transmittance through the first interface
+@@ -208,13 +212,22 @@ def physical(aoi, n=1.526, K=4.0, L=0.002, *, n_ar=None):
+         tau_0 *= (1 - rho23_0) / (1 - rho23_0 * rho12_0)
+ 
+     # transmittance after absorption in the glass
+-    tau_s *= np.exp(-K * L / costheta)
+-    tau_p *= np.exp(-K * L / costheta)
++    with np.errstate(divide='ignore', invalid='ignore'):
++        tau_s *= np.exp(-K * L / costheta)
++        tau_p *= np.exp(-K * L / costheta)
++
+     tau_0 *= np.exp(-K * L)
+ 
+     # incidence angle modifier
+     iam = (tau_s + tau_p) / 2 / tau_0
+ 
++    # for light coming from behind the plane, none can enter the module
++    # when n2 > 1, this is already the case
++    if np.isclose(n2, 1).any():
++        iam = np.where(aoi >= 90, 0, iam)
++        if isinstance(aoi, pd.Series):
++            iam = pd.Series(iam, index=aoi.index)
++
+     return iam
+2026-11-27 06:08:50,883 - INFO - Grading answer for pvlib__pvlib-python-1707...
+2026-11-27 06:08:50,886 - INFO - report: {'pvlib__pvlib-python-1707': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False, 'infra_failure': False}}
+Result for pvlib__pvlib-python-1707: resolved: False
+2026-11-27 06:08:50,886 - INFO - Attempting to stop container sweb.eval.pvlib__pvlib-python-1707.gold_dev...
+2026-11-27 06:09:06,230 - INFO - Container sweb.eval.pvlib__pvlib-python-1707.gold_dev stopped successfully.
+2026-11-27 06:09:06,230 - INFO - Attempting to remove container sweb.eval.pvlib__pvlib-python-1707.gold_dev...
+2026-11-27 06:09:06,356 - INFO - Container sweb.eval.pvlib__pvlib-python-1707.gold_dev removed successfully.

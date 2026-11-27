@@ -1,0 +1,51 @@
+2026-11-27 06:07:52,306 - INFO - Image not found locally, attempting to pull...
+2026-11-27 06:08:37,423 - INFO - Creating container for pvlib__pvlib-python-1154...
+2026-11-27 06:08:39,147 - INFO - Container for pvlib__pvlib-python-1154 created: 6dfd7ceb01ca5fb57f77f52c63863d77303900d153f87145aa376764a5f05c01
+2026-11-27 06:08:39,361 - INFO - Container for pvlib__pvlib-python-1154 started: 6dfd7ceb01ca5fb57f77f52c63863d77303900d153f87145aa376764a5f05c01
+2026-11-27 06:08:39,362 - INFO - Intermediate patch for pvlib__pvlib-python-1154 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1154/patch.diff, now applying to container...
+2026-11-27 06:08:39,522 - INFO - >>>>> Applied Patch:
+Checking patch pvlib/irradiance.py...
+Applied patch pvlib/irradiance.py cleanly.
+
+2026-11-27 06:08:39,906 - INFO - Git diff before:
+diff --git a/pvlib/irradiance.py b/pvlib/irradiance.py
+index 6580030..3ec6b21 100644
+--- a/pvlib/irradiance.py
++++ b/pvlib/irradiance.py
+@@ -886,8 +886,9 @@ def reindl(surface_tilt, surface_azimuth, dhi, dni, ghi, dni_extra,
+     # these are the () and [] sub-terms of the second term of eqn 8
+     term1 = 1 - AI
+     term2 = 0.5 * (1 + tools.cosd(surface_tilt))
+-    term3 = 1 + np.sqrt(HB / ghi) * (tools.sind(0.5 * surface_tilt) ** 3)
+-
++    with np.errstate(invalid='ignore', divide='ignore'):
++        hb_to_ghi = np.where(ghi == 0, 0, np.divide(HB, ghi))
++    term3 = 1 + np.sqrt(hb_to_ghi) * (tools.sind(0.5 * surface_tilt)**3)
+     sky_diffuse = dhi * (AI * Rb + term1 * term2 * term3)
+     sky_diffuse = np.maximum(sky_diffuse, 0)
+2026-11-27 06:08:39,907 - INFO - Eval script for pvlib__pvlib-python-1154 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1154/eval.sh; copying to container...
+2026-11-27 06:08:46,139 - INFO - Test runtime: 6.17 seconds
+2026-11-27 06:08:46,140 - INFO - Test output for pvlib__pvlib-python-1154 written to logs/run_evaluation/gold_dev/gold/pvlib__pvlib-python-1154/test_output.txt
+2026-11-27 06:08:46,196 - INFO - Git diff after:
+diff --git a/pvlib/irradiance.py b/pvlib/irradiance.py
+index 6580030..3ec6b21 100644
+--- a/pvlib/irradiance.py
++++ b/pvlib/irradiance.py
+@@ -886,8 +886,9 @@ def reindl(surface_tilt, surface_azimuth, dhi, dni, ghi, dni_extra,
+     # these are the () and [] sub-terms of the second term of eqn 8
+     term1 = 1 - AI
+     term2 = 0.5 * (1 + tools.cosd(surface_tilt))
+-    term3 = 1 + np.sqrt(HB / ghi) * (tools.sind(0.5 * surface_tilt) ** 3)
+-
++    with np.errstate(invalid='ignore', divide='ignore'):
++        hb_to_ghi = np.where(ghi == 0, 0, np.divide(HB, ghi))
++    term3 = 1 + np.sqrt(hb_to_ghi) * (tools.sind(0.5 * surface_tilt)**3)
+     sky_diffuse = dhi * (AI * Rb + term1 * term2 * term3)
+     sky_diffuse = np.maximum(sky_diffuse, 0)
+2026-11-27 06:08:46,196 - INFO - Grading answer for pvlib__pvlib-python-1154...
+2026-11-27 06:08:46,199 - INFO - report: {'pvlib__pvlib-python-1154': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False, 'infra_failure': False}}
+Result for pvlib__pvlib-python-1154: resolved: False
+2026-11-27 06:08:46,199 - INFO - Attempting to stop container sweb.eval.pvlib__pvlib-python-1154.gold_dev...
+2026-11-27 06:09:01,542 - INFO - Container sweb.eval.pvlib__pvlib-python-1154.gold_dev stopped successfully.
+2026-11-27 06:09:01,542 - INFO - Attempting to remove container sweb.eval.pvlib__pvlib-python-1154.gold_dev...
+2026-11-27 06:09:01,620 - INFO - Container sweb.eval.pvlib__pvlib-python-1154.gold_dev removed successfully.

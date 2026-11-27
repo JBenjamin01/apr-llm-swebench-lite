@@ -1,0 +1,49 @@
+2026-11-27 06:13:47,453 - INFO - Image not found locally, attempting to pull...
+2026-11-27 06:14:22,248 - INFO - Creating container for sqlfluff__sqlfluff-2419...
+2026-11-27 06:14:23,581 - INFO - Container for sqlfluff__sqlfluff-2419 created: e27a88e7e8b4875d667d6822a27882cdf9fff06569fe107090116e9d732cf4b2
+2026-11-27 06:14:23,736 - INFO - Container for sqlfluff__sqlfluff-2419 started: e27a88e7e8b4875d667d6822a27882cdf9fff06569fe107090116e9d732cf4b2
+2026-11-27 06:14:23,736 - INFO - Intermediate patch for sqlfluff__sqlfluff-2419 written to logs/run_evaluation/gold_dev/gold/sqlfluff__sqlfluff-2419/patch.diff, now applying to container...
+2026-11-27 06:14:23,847 - INFO - >>>>> Applied Patch:
+Checking patch src/sqlfluff/rules/L060.py...
+Applied patch src/sqlfluff/rules/L060.py cleanly.
+
+2026-11-27 06:14:24,036 - INFO - Git diff before:
+diff --git a/src/sqlfluff/rules/L060.py b/src/sqlfluff/rules/L060.py
+index 836941edc..8a9962081 100644
+--- a/src/sqlfluff/rules/L060.py
++++ b/src/sqlfluff/rules/L060.py
+@@ -59,4 +59,8 @@ class Rule_L060(BaseRule):
+             ],
+         )
+ 
+-        return LintResult(context.segment, [fix])
++        return LintResult(
++            anchor=context.segment,
++            fixes=[fix],
++            description=f"Use 'COALESCE' instead of '{context.segment.raw_upper}'.",
++        )
+2026-11-27 06:14:24,036 - INFO - Eval script for sqlfluff__sqlfluff-2419 written to logs/run_evaluation/gold_dev/gold/sqlfluff__sqlfluff-2419/eval.sh; copying to container...
+2026-11-27 06:14:26,276 - INFO - Test runtime: 2.18 seconds
+2026-11-27 06:14:26,276 - INFO - Test output for sqlfluff__sqlfluff-2419 written to logs/run_evaluation/gold_dev/gold/sqlfluff__sqlfluff-2419/test_output.txt
+2026-11-27 06:14:26,332 - INFO - Git diff after:
+diff --git a/src/sqlfluff/rules/L060.py b/src/sqlfluff/rules/L060.py
+index 836941edc..8a9962081 100644
+--- a/src/sqlfluff/rules/L060.py
++++ b/src/sqlfluff/rules/L060.py
+@@ -59,4 +59,8 @@ class Rule_L060(BaseRule):
+             ],
+         )
+ 
+-        return LintResult(context.segment, [fix])
++        return LintResult(
++            anchor=context.segment,
++            fixes=[fix],
++            description=f"Use 'COALESCE' instead of '{context.segment.raw_upper}'.",
++        )
+2026-11-27 06:14:26,332 - INFO - Grading answer for sqlfluff__sqlfluff-2419...
+2026-11-27 06:14:26,332 - INFO - report: {'sqlfluff__sqlfluff-2419': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'infra_failure': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['test/rules/std_L060_test.py::test__rules__std_L060_raised'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sqlfluff__sqlfluff-2419: resolved: True
+2026-11-27 06:14:26,332 - INFO - Attempting to stop container sweb.eval.sqlfluff__sqlfluff-2419.gold_dev...
+2026-11-27 06:14:41,578 - INFO - Container sweb.eval.sqlfluff__sqlfluff-2419.gold_dev stopped successfully.
+2026-11-27 06:14:41,578 - INFO - Attempting to remove container sweb.eval.sqlfluff__sqlfluff-2419.gold_dev...
+2026-11-27 06:14:41,642 - INFO - Container sweb.eval.sqlfluff__sqlfluff-2419.gold_dev removed successfully.

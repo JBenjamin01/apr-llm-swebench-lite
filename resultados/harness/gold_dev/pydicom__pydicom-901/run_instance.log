@@ -1,0 +1,133 @@
+2026-11-27 06:10:29,462 - INFO - Image not found locally, attempting to pull...
+2026-11-27 06:11:31,294 - INFO - Creating container for pydicom__pydicom-901...
+2026-11-27 06:11:31,964 - INFO - Container for pydicom__pydicom-901 created: b35e0b20b5ea6d4699bda7b245a54ad3e53283bdfe8b028832b51cc51b96f43a
+2026-11-27 06:11:32,127 - INFO - Container for pydicom__pydicom-901 started: b35e0b20b5ea6d4699bda7b245a54ad3e53283bdfe8b028832b51cc51b96f43a
+2026-11-27 06:11:32,128 - INFO - Intermediate patch for pydicom__pydicom-901 written to logs/run_evaluation/gold_dev/gold/pydicom__pydicom-901/patch.diff, now applying to container...
+2026-11-27 06:11:32,248 - INFO - >>>>> Applied Patch:
+Checking patch pydicom/config.py...
+Applied patch pydicom/config.py cleanly.
+
+2026-11-27 06:11:32,398 - INFO - Git diff before:
+diff --git a/pydicom/config.py b/pydicom/config.py
+index ae9c8bdf1..d3f589110 100644
+--- a/pydicom/config.py
++++ b/pydicom/config.py
+@@ -62,10 +62,7 @@ and datetime.time respectively. Default: False
+ 
+ # Logging system and debug function to change logging level
+ logger = logging.getLogger('pydicom')
+-handler = logging.StreamHandler()
+-formatter = logging.Formatter("%(message)s")
+-handler.setFormatter(formatter)
+-logger.addHandler(handler)
++logger.addHandler(logging.NullHandler())
+ 
+ 
+ import pydicom.pixel_data_handlers.numpy_handler as np_handler  # noqa
+@@ -110,16 +107,29 @@ syntax, then this fact is announced in a NotImplementedError exception.
+ """
+ 
+ 
+-def debug(debug_on=True):
+-    """Turn debugging of DICOM file reading and writing on or off.
++def debug(debug_on=True, default_handler=True):
++    """Turn on/off debugging of DICOM file reading and writing.
++
+     When debugging is on, file location and details about the
+     elements read at that location are logged to the 'pydicom'
+     logger using python's logging module.
+ 
+-    :param debug_on: True (default) to turn on debugging,
+-    False to turn off.
++    Parameters
++    ----------
++    debug_on : bool, optional
++        If True (default) then turn on debugging, False to turn off.
++    default_handler : bool, optional
++        If True (default) then use ``logging.StreamHandler()`` as the handler
++        for log messages.
+     """
+     global logger, debugging
++
++    if default_handler:
++        handler = logging.StreamHandler()
++        formatter = logging.Formatter("%(message)s")
++        handler.setFormatter(formatter)
++        logger.addHandler(handler)
++
+     if debug_on:
+         logger.setLevel(logging.DEBUG)
+         debugging = True
+@@ -129,4 +139,4 @@ def debug(debug_on=True):
+ 
+ 
+ # force level=WARNING, in case logging default is set differently (issue 103)
+-debug(False)
++debug(False, False)
+2026-11-27 06:11:32,398 - INFO - Eval script for pydicom__pydicom-901 written to logs/run_evaluation/gold_dev/gold/pydicom__pydicom-901/eval.sh; copying to container...
+2026-11-27 06:11:34,120 - INFO - Test runtime: 1.66 seconds
+2026-11-27 06:11:34,121 - INFO - Test output for pydicom__pydicom-901 written to logs/run_evaluation/gold_dev/gold/pydicom__pydicom-901/test_output.txt
+2026-11-27 06:11:34,173 - INFO - Git diff after:
+diff --git a/pydicom/config.py b/pydicom/config.py
+index ae9c8bdf1..d3f589110 100644
+--- a/pydicom/config.py
++++ b/pydicom/config.py
+@@ -62,10 +62,7 @@ and datetime.time respectively. Default: False
+ 
+ # Logging system and debug function to change logging level
+ logger = logging.getLogger('pydicom')
+-handler = logging.StreamHandler()
+-formatter = logging.Formatter("%(message)s")
+-handler.setFormatter(formatter)
+-logger.addHandler(handler)
++logger.addHandler(logging.NullHandler())
+ 
+ 
+ import pydicom.pixel_data_handlers.numpy_handler as np_handler  # noqa
+@@ -110,16 +107,29 @@ syntax, then this fact is announced in a NotImplementedError exception.
+ """
+ 
+ 
+-def debug(debug_on=True):
+-    """Turn debugging of DICOM file reading and writing on or off.
++def debug(debug_on=True, default_handler=True):
++    """Turn on/off debugging of DICOM file reading and writing.
++
+     When debugging is on, file location and details about the
+     elements read at that location are logged to the 'pydicom'
+     logger using python's logging module.
+ 
+-    :param debug_on: True (default) to turn on debugging,
+-    False to turn off.
++    Parameters
++    ----------
++    debug_on : bool, optional
++        If True (default) then turn on debugging, False to turn off.
++    default_handler : bool, optional
++        If True (default) then use ``logging.StreamHandler()`` as the handler
++        for log messages.
+     """
+     global logger, debugging
++
++    if default_handler:
++        handler = logging.StreamHandler()
++        formatter = logging.Formatter("%(message)s")
++        handler.setFormatter(formatter)
++        logger.addHandler(handler)
++
+     if debug_on:
+         logger.setLevel(logging.DEBUG)
+         debugging = True
+@@ -129,4 +139,4 @@ def debug(debug_on=True):
+ 
+ 
+ # force level=WARNING, in case logging default is set differently (issue 103)
+-debug(False)
++debug(False, False)
+2026-11-27 06:11:34,173 - INFO - Grading answer for pydicom__pydicom-901...
+2026-11-27 06:11:34,179 - INFO - report: {'pydicom__pydicom-901': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'infra_failure': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['pydicom/tests/test_config.py::TestDebug::test_default', 'pydicom/tests/test_config.py::TestDebug::test_debug_on_handler_null', 'pydicom/tests/test_config.py::TestDebug::test_debug_off_handler_null', 'pydicom/tests/test_config.py::TestDebug::test_debug_on_handler_stream', 'pydicom/tests/test_config.py::TestDebug::test_debug_off_handler_stream'], 'failure': []}, 'PASS_TO_PASS': {'success': [], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for pydicom__pydicom-901: resolved: True
+2026-11-27 06:11:34,179 - INFO - Attempting to stop container sweb.eval.pydicom__pydicom-901.gold_dev...
+2026-11-27 06:11:49,433 - INFO - Container sweb.eval.pydicom__pydicom-901.gold_dev stopped successfully.
+2026-11-27 06:11:49,433 - INFO - Attempting to remove container sweb.eval.pydicom__pydicom-901.gold_dev...
+2026-11-27 06:11:49,494 - INFO - Container sweb.eval.pydicom__pydicom-901.gold_dev removed successfully.
