@@ -48,3 +48,25 @@ Con los parches de los desarrolladores, el harness oficial resuelve **15 de 23**
 | pydicom 1139, 1413 | pytest reciente no ejecuta `setup` estilo nose (`TestBadValueRead`) |
 
 Los informes completos están en `resultados/harness/gold_dev/`.
+
+## Resultados
+
+**Prueba de viabilidad** (15 instancias dev válidas; criterios en la Tabla V del artículo):
+
+| Modelo (AWQ 4 bits) | E1 | E3 | Mediana gen. | Decisión |
+|---|---|---|---|---|
+| Qwen2.5-Coder-7B | 13/15 | 9/15 | 20 s | Seleccionado |
+| Llama-3.1-8B | 2/15 | 1/15 | 43 s | Excluido (omite el separador `=======`) |
+| Qwen2.5-Coder-14B | 13/15 | 7/15 | 37 s | Excluido (E3 < 50 %); análisis complementario |
+| Qwen2.5-Coder-32B | — | — | — | No carga: la T4 no admite caché KV FP8 |
+
+**Muestra de test** (50 instancias aleatorias, semilla 2026; las 50 verificadas con el parche gold):
+
+| | E1 | E2 | E3 | E4 | E5 | Resueltas |
+|---|---|---|---|---|---|---|
+| Qwen2.5-Coder-7B | 43 | 26 | 24 | 5 | 7 | **5 (10 %)** |
+| Qwen2.5-Coder-14B (compl.) | 45 | 31 | 30 | 4 | 7 | **3 (6 %)** |
+
+Análisis completo en `resultados/analisis_dev/` y `resultados/analisis_test50/`; salidas crudas en
+`resultados/generacion/`; informes del harness en `resultados/harness/`. Los resultados con la primera
+versión del conversor (sin re-indentación relativa) se conservan como `*_v1` en el entorno de validación.
