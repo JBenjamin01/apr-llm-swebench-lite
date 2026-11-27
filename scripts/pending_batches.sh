@@ -7,7 +7,7 @@ set -uo pipefail
 IDS_FILE="$1"; BATCH="${2:-5}"; MIN_GB=6
 S="$(cd "$(dirname "$0")" && pwd)"
 WIN="/mnt/c/Users/jhona/Documents/Projects/CS_Artículo/kaggle_out"
-mapfile -t ALL < <(tr -d '' < "$IDS_FILE" | grep .)
+mapfile -t ALL < <(tr -d '\r' < "$IDS_FILE" | grep .)
 cd ~/apr || exit 1
 for ((i = 0; i < ${#ALL[@]}; i += BATCH)); do
   free=$(df --output=avail -BG /mnt/c | tail -1 | tr -dc 0-9)
