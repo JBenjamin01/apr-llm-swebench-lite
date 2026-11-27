@@ -1,0 +1,29 @@
+{
+  "model_key": "qwen7",
+  "hf_id": "Qwen/Qwen2.5-Coder-7B-Instruct-AWQ",
+  "split": "test",
+  "sample": 50,
+  "sample_seed": 2026,
+  "tensor_parallel": 1,
+  "kv_cache_dtype": "auto",
+  "quantization": "awq",
+  "dtype": "float16",
+  "max_model_len": 32768,
+  "max_tokens": 2048,
+  "temperature": 0.0,
+  "seed": 0,
+  "gpu_memory_utilization": 0.92,
+  "gpus": [
+    "Tesla T4"
+  ],
+  "gpu_indices": [
+    0
+  ],
+  "vllm": "0.34.0",
+  "torch": "2.14.0+cu130",
+  "python": "3.13.16",
+  "hf_revision": "8e8ed243bbe6f9a5aff549a0924562fc719b2b8a",
+  "load_time_s": 55.8,
+  "mem_after_load_gb": 13.3,
+  "finished": "2026-11-27 15:21:43"
+}

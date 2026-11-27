@@ -90,6 +90,14 @@ def main():
     for pat in a.meta:
         for p in glob.glob(pat):
             m = json.load(open(p))
+            # memoria de los pesos segun el registro de vLLM ("Model loading took X GiB")
+            logp = p.replace("_meta.json", ".log")
+            try:
+                import re
+                hits = re.findall(r"Model loading took ([0-9.]+) GiB", open(logp, errors="ignore").read())
+                m["weights_gib"] = float(hits[-1]) if hits else None
+            except OSError:
+                m["weights_gib"] = None
             metas[m["model_key"]] = m
     models = sorted(data)
     lines = ["# Resultados del analisis\n"]
@@ -135,7 +143,7 @@ def main():
     # ---- Costo (RQ4) ----
     lines.append("\n## Costo (RQ4)\n")
     lines.append("| Modelo | t. gen. mediana [IQR] (s) | tokens salida mediana | "
-                 "memoria GPU máx. (GB) | energía total (Wh) | Wh por instancia | "
+                 "pesos en GPU (GiB) | energía total (Wh) | Wh por instancia | "
                  "GPU-s por resuelta | prompts recortados | salidas truncadas |")
     lines.append("|---" * 9 + "|")
     cost = {}
@@ -143,17 +151,18 @@ def main():
         rows = list(data[m].values())
         t = [f(r["gen_time_s"]) for r in rows if f(r["gen_time_s"]) is not None]
         to = [f(r["output_tokens"]) for r in rows if f(r["output_tokens"]) is not None]
-        mem = [f(r["peak_mem_gb"]) for r in rows if f(r["peak_mem_gb"]) is not None]
         en = [f(r["energy_wh"]) for r in rows if f(r["energy_wh"]) is not None]
         res = summary[m]["resolved"]
         ngpu = len(metas.get(m, {}).get("gpus", [])) or 1
         tp = metas.get(m, {}).get("tensor_parallel", 1)
         gpu_s = sum(t) * tp
         cost[m] = {"t_med": st.median(t) if t else float("nan"), "gpu_s": gpu_s,
+                   "t_q1": q(t, .25), "t_q3": q(t, .75), "out_med": st.median(to),
+                   "energy_wh": sum(en), "weights_gib": metas.get(m, {}).get("weights_gib"),
                    "res_rate": res / len(rows), "tp": tp, "ngpu": ngpu}
         lines.append(
             f"| {m} | {st.median(t):.1f} [{q(t,.25):.1f}–{q(t,.75):.1f}] | "
-            f"{st.median(to):.0f} | {max(mem):.1f} | {sum(en):.1f} | "
+            f"{st.median(to):.0f} | {metas.get(m, {}).get('weights_gib') or float('nan'):.2f} | {sum(en):.1f} | "
             f"{sum(en)/len(en):.2f} | "
             f"{(gpu_s/res) if res else float('inf'):.0f} | "
             f"{sum(b(r['truncated']) for r in rows)} | "
