@@ -1,0 +1,26 @@
+diff --git a/astroid/modutils.py b/astroid/modutils.py
+--- a/astroid/modutils.py
++++ b/astroid/modutils.py
+@@ -67,6 +67,22 @@
+ else:
+     PY_SOURCE_EXTS = ("py",)
+     PY_COMPILED_EXTS = ("so",)
++if os.name == "nt":
++    STD_LIB_DIRS.add(os.path.join(sys.prefix, "dlls"))
++    try:
++        # real_prefix is defined when running inside virtual environments,
++        # created with the **virtualenv** library.
++        # Deprecated in virtualenv==16.7.9
++        # See: https://github.com/pypa/virtualenv/issues/1622
++        STD_LIB_DIRS.add(os.path.join(sys.real_prefix, "dlls"))  # type: ignore[attr-defined]
++    except AttributeError:
++        # sys.base_exec_prefix is always defined, but in a virtual environment
++        # created with the stdlib **venv** module, it points to the original
++        # installation, if the virtual env is activated.
++        try:
++            STD_LIB_DIRS.add(os.path.join(sys.base_exec_prefix, "dlls"))
++        except AttributeError:
++            pass
+ 
+ 
+ try:

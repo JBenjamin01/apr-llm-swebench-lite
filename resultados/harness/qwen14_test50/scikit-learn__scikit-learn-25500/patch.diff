@@ -1,0 +1,12 @@
+diff --git a/sklearn/isotonic.py b/sklearn/isotonic.py
+--- a/sklearn/isotonic.py
++++ b/sklearn/isotonic.py
+@@ -393,6 +393,8 @@
+         res = self.f_(T)
+ 
+         # on scipy 0.17, interp1d up-casts to float64, so we cast back
++        if isinstance(res, pd.DataFrame):
++            res = res.values
+         res = res.astype(T.dtype)
+ 
+         return res

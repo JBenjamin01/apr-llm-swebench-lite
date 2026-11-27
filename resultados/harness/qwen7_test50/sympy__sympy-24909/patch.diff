@@ -1,0 +1,13 @@
+diff --git a/sympy/physics/units/prefixes.py b/sympy/physics/units/prefixes.py
+--- a/sympy/physics/units/prefixes.py
++++ b/sympy/physics/units/prefixes.py
+@@ -93,6 +93,9 @@
+                 if PREFIXES[p].scale_factor == fact:
+                     return PREFIXES[p]
+             return fact
++
++        if isinstance(other, Unit):
++            return Unit(self.scale_factor * other.scale_factor, other.name, other.abbrev)
+ 
+         return self.scale_factor * other
+ 

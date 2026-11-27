@@ -1,0 +1,16 @@
+diff --git a/src/sqlfluff/core/linter/linted_file.py b/src/sqlfluff/core/linter/linted_file.py
+--- a/src/sqlfluff/core/linter/linted_file.py
++++ b/src/sqlfluff/core/linter/linted_file.py
+@@ -59,9 +59,9 @@
+         for v in self.get_violations():
+             if hasattr(v, "check_tuple"):
+                 vs.append(v.check_tuple())
+-            elif raise_on_non_linting_violations:
+-                raise v
+-        return vs
++            else:
++                linter_logger.warning(f"Non-linting violation: {v}")
++            return vs
+ 
+     def get_violations(
+         self,

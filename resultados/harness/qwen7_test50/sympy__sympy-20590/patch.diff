@@ -1,0 +1,16 @@
+diff --git a/sympy/core/_print_helpers.py b/sympy/core/_print_helpers.py
+--- a/sympy/core/_print_helpers.py
++++ b/sympy/core/_print_helpers.py
+@@ -24,6 +24,12 @@
+         return sstr(self, order=None)
+ 
+     __repr__ = __str__
++
++    # Add support for __dict__ to Symbol instances
++    def __getattribute__(self, name):
++        if name == '__dict__':
++            return {}
++        return super().__getattribute__(name)
+ 
+     def _repr_disabled(self):
+         """

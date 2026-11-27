@@ -1,0 +1,54 @@
+diff --git a/src/marshmallow/schema.py b/src/marshmallow/schema.py
+--- a/src/marshmallow/schema.py
++++ b/src/marshmallow/schema.py
+@@ -878,31 +878,29 @@
+                     try:
+                         value = item[field_obj.attribute or field_name]
+                     except KeyError:
+-                        pass
+-                    else:
+-                        validated_value = unmarshal.call_and_store(
+-                            getter_func=validator,
+-                            data=value,
+-                            field_name=field_obj.load_from or field_name,
+-                            field_obj=field_obj,
+-                            index=(idx if self.opts.index_errors else None)
+-                        )
+-                        if validated_value is missing:
+-                            data[idx].pop(field_name, None)
++                        continue
++                    validated_value = unmarshal.call_and_store(
++                        getter_func=validator,
++                        data=value,
++                        field_name=field_obj.load_from or field_name,
++                        field_obj=field_obj,
++                        index=(idx if self.opts.index_errors else None)
++                    )
++                    if validated_value is missing:
++                        data[idx].pop(field_name, None)
+             else:
+                 try:
+                     value = data[field_obj.attribute or field_name]
+                 except KeyError:
+-                    pass
+-                else:
+-                    validated_value = unmarshal.call_and_store(
+-                        getter_func=validator,
+-                        data=value,
+-                        field_name=field_obj.load_from or field_name,
+-                        field_obj=field_obj
+-                    )
+-                    if validated_value is missing:
+-                        data.pop(field_name, None)
++                    continue
++                validated_value = unmarshal.call_and_store(
++                    getter_func=validator,
++                    data=value,
++                    field_name=field_obj.load_from or field_name,
++                    field_obj=field_obj
++                )
++                if validated_value is missing:
++                    data.pop(field_name, None)
+ 
+     def _invoke_validators(
+             self, unmarshal, pass_many, data, original_data, many, field_errors=False):

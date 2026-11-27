@@ -1,0 +1,11 @@
+diff --git a/django/contrib/auth/forms.py b/django/contrib/auth/forms.py
+--- a/django/contrib/auth/forms.py
++++ b/django/contrib/auth/forms.py
+@@ -58,6 +58,7 @@
+         kwargs.setdefault("required", False)
+         kwargs.setdefault('disabled', True)
+         super().__init__(*args, **kwargs)
++        self.widget.attrs.pop('id', None)
+ 
+ 
+ class UsernameField(forms.CharField):

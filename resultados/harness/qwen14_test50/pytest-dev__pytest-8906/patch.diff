@@ -1,0 +1,13 @@
+diff --git a/src/_pytest/python.py b/src/_pytest/python.py
+--- a/src/_pytest/python.py
++++ b/src/_pytest/python.py
+@@ -611,7 +611,8 @@
+                 "Using pytest.skip outside of a test is not allowed. "
+                 "To decorate a test function, use the @pytest.mark.skip "
+                 "or @pytest.mark.skipif decorators instead, and to skip a "
+-                "module use `pytestmark = pytest.mark.{skip,skipif}."
++                "module use `pytestmark = pytest.mark.{skip,skipif}. "
++                "Consider using `pytest.skip(msg, allow_module_level=True)` to skip the module."
+             ) from e
+         self.config.pluginmanager.consider_module(mod)
+         return mod

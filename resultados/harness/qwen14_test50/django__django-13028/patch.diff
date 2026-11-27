@@ -1,0 +1,15 @@
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1131,6 +1131,11 @@
+             )
+         if hasattr(expression, 'get_source_expressions'):
+             for expr in expression.get_source_expressions():
++                if not getattr(expr, 'filterable', True):
++                    raise NotSupportedError(
++                        expr.__class__.__name__ + ' is disallowed in the filter '
++                        'clause.'
++                    )
+                 self.check_filterable(expr)
+ 
+     def build_lookup(self, lookups, lhs, rhs):

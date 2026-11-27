@@ -1,0 +1,12 @@
+diff --git a/src/sqlfluff/rules/L039.py b/src/sqlfluff/rules/L039.py
+--- a/src/sqlfluff/rules/L039.py
++++ b/src/sqlfluff/rules/L039.py
+@@ -58,7 +58,7 @@
+                                     LintFix(
+                                         "edit",
+                                         prev_whitespace,
+-                                        WhitespaceSegment(),
++                                        WhitespaceSegment(" "),
+                                     )
+                                 ],
+                             )

@@ -1,0 +1,83 @@
+2026-11-27 07:09:54,714 - INFO - Image not found locally, attempting to pull...
+2026-11-27 07:10:04,359 - INFO - Creating container for sympy__sympy-16106...
+2026-11-27 07:10:04,613 - INFO - Container for sympy__sympy-16106 created: 162a53ef04476389b02a2e43724756e2dfe96a97d7acc0d0b3102fcd50783a51
+2026-11-27 07:10:04,762 - INFO - Container for sympy__sympy-16106 started: 162a53ef04476389b02a2e43724756e2dfe96a97d7acc0d0b3102fcd50783a51
+2026-11-27 07:10:04,763 - INFO - Intermediate patch for sympy__sympy-16106 written to logs/run_evaluation/gold_test50/gold/sympy__sympy-16106/patch.diff, now applying to container...
+2026-11-27 07:10:04,900 - INFO - >>>>> Applied Patch:
+Checking patch sympy/printing/mathml.py...
+Applied patch sympy/printing/mathml.py cleanly.
+
+2026-11-27 07:10:05,230 - INFO - Git diff before:
+diff --git a/sympy/printing/mathml.py b/sympy/printing/mathml.py
+index 1aa0ee01a..2cdc05a7b 100755
+--- a/sympy/printing/mathml.py
++++ b/sympy/printing/mathml.py
+@@ -1271,6 +1271,26 @@ def _print_Lambda(self, e):
+         return x
+ 
+ 
++    def _print_tuple(self, e):
++        x = self.dom.createElement('mfenced')
++        for i in e:
++            x.appendChild(self._print(i))
++        return x
++
++
++    def _print_IndexedBase(self, e):
++        return self._print(e.label)
++
++    def _print_Indexed(self, e):
++        x = self.dom.createElement('msub')
++        x.appendChild(self._print(e.base))
++        if len(e.indices) == 1:
++            x.appendChild(self._print(e.indices[0]))
++            return x
++        x.appendChild(self._print(e.indices))
++        return x
++
++
+ def mathml(expr, printer='content', **settings):
+     """Returns the MathML representation of expr. If printer is presentation then
+      prints Presentation MathML else prints content MathML.
+2026-11-27 07:10:05,231 - INFO - Eval script for sympy__sympy-16106 written to logs/run_evaluation/gold_test50/gold/sympy__sympy-16106/eval.sh; copying to container...
+2026-11-27 07:10:08,695 - INFO - Test runtime: 3.31 seconds
+2026-11-27 07:10:08,696 - INFO - Test output for sympy__sympy-16106 written to logs/run_evaluation/gold_test50/gold/sympy__sympy-16106/test_output.txt
+2026-11-27 07:10:08,750 - INFO - Git diff after:
+diff --git a/sympy/printing/mathml.py b/sympy/printing/mathml.py
+index 1aa0ee01a..2cdc05a7b 100755
+--- a/sympy/printing/mathml.py
++++ b/sympy/printing/mathml.py
+@@ -1271,6 +1271,26 @@ def _print_Lambda(self, e):
+         return x
+ 
+ 
++    def _print_tuple(self, e):
++        x = self.dom.createElement('mfenced')
++        for i in e:
++            x.appendChild(self._print(i))
++        return x
++
++
++    def _print_IndexedBase(self, e):
++        return self._print(e.label)
++
++    def _print_Indexed(self, e):
++        x = self.dom.createElement('msub')
++        x.appendChild(self._print(e.base))
++        if len(e.indices) == 1:
++            x.appendChild(self._print(e.indices[0]))
++            return x
++        x.appendChild(self._print(e.indices))
++        return x
++
++
+ def mathml(expr, printer='content', **settings):
+     """Returns the MathML representation of expr. If printer is presentation then
+      prints Presentation MathML else prints content MathML.
+2026-11-27 07:10:08,750 - INFO - Grading answer for sympy__sympy-16106...
+2026-11-27 07:10:08,752 - INFO - report: {'sympy__sympy-16106': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'infra_failure': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_print_IndexedBase'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_mathml_printer', 'test_content_printmethod', 'test_content_mathml_core', 'test_content_mathml_functions', 'test_content_mathml_limits', 'test_content_mathml_integrals', 'test_content_mathml_matrices', 'test_content_mathml_sums', 'test_content_mathml_tuples', 'test_content_mathml_add', 'test_content_mathml_Rational', 'test_content_mathml_constants', 'test_content_mathml_trig', 'test_content_mathml_relational', 'test_content_symbol', 'test_content_mathml_greek', 'test_content_mathml_order', 'test_content_settings', 'test_presentation_printmethod', 'test_presentation_mathml_core', 'test_presentation_mathml_functions', 'test_print_derivative', 'test_presentation_mathml_limits', 'test_presentation_mathml_integrals', 'test_presentation_mathml_matrices', 'test_presentation_mathml_sums', 'test_presentation_mathml_add', 'test_presentation_mathml_Rational', 'test_presentation_mathml_constants', 'test_presentation_mathml_trig', 'test_presentation_mathml_relational', 'test_presentation_symbol', 'test_presentation_mathml_greek', 'test_presentation_mathml_order', 'test_print_tuples', 'test_print_re_im', 'test_presentation_settings', 'test_toprettyxml_hooking', 'test_print_domains', 'test_print_expression_with_minus', 'test_print_AssocOp', 'test_print_basic', 'test_ln_notation_print', 'test_mul_symbol_print', 'test_print_lerchphi', 'test_print_polylog', 'test_print_logic', 'test_root_notation_print', 'test_fold_frac_powers_print', 'test_fold_short_frac_print', 'test_print_factorials', 'test_print_Lambda', 'test_print_conjugate', 'test_print_matrix_symbol', 'test_print_random_symbol'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-16106: resolved: True
+2026-11-27 07:10:08,752 - INFO - Attempting to stop container sweb.eval.sympy__sympy-16106.gold_test50...
+2026-11-27 07:10:23,970 - INFO - Container sweb.eval.sympy__sympy-16106.gold_test50 stopped successfully.
+2026-11-27 07:10:23,971 - INFO - Attempting to remove container sweb.eval.sympy__sympy-16106.gold_test50...
+2026-11-27 07:10:24,038 - INFO - Container sweb.eval.sympy__sympy-16106.gold_test50 removed successfully.

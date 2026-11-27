@@ -1,0 +1,355 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Generating dev split:   0%|          | 0/23 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 23/23 [00:00<00:00, 295.33 examples/s]
+Generating test split:   0%|          | 0/300 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 300/300 [00:00<00:00, 20134.27 examples/s]
+W1127 20:38:17.010000 74 torch/_opaque_base.py:6] torch._opaque_base is deprecated, use torch._custom_class_base instead
+W1127 20:38:17.011000 74 torch/_library/opaque_object.py:288] register_opaque_type is deprecated, use register_custom_class instead
+W1127 20:38:17.011000 74 torch/_library/opaque_object.py:211] typ='value' is deprecated, use typ='constant' instead
+[qwen32] 23 instancias por generar (0 ya hechas)
+(MainProcess pid=74) INFO 11-27 20:38:39 [startup.py:96] non-default args: {'dtype': 'half', 'kv_cache_dtype': 'fp8', 'max_model_len': 32768, 'tensor_parallel_size': 2, 'gpu_memory_utilization': 0.92, 'disable_log_stats': True, 'quantization': 'awq', 'enforce_eager': True, 'model': 'Qwen/Qwen2.5-Coder-32B-Instruct-AWQ'}
+(MainProcess pid=74) INFO 11-27 20:38:55 [model.py:761] Resolved architecture: Qwen2ForCausalLM
+(MainProcess pid=74) INFO 11-27 20:38:55 [model.py:2214] Using max model len 32768
+(MainProcess pid=74) INFO 11-27 20:38:57 [cache.py:519] Using fp8 data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor
+(MainProcess pid=74) INFO 11-27 20:38:57 [scheduler.py:354] Chunked prefill is enabled with max_num_batched_tokens=8192.
+Parse safetensors files:   0%|          | 0/5 [00:00<?, ?it/s]Parse safetensors files:  20%|██        | 1/5 [00:00<00:01,  3.89it/s]Parse safetensors files:  80%|████████  | 4/5 [00:00<00:00, 12.23it/s]Parse safetensors files: 100%|██████████| 5/5 [00:00<00:00, 11.63it/s]
+(MainProcess pid=74) WARNING 11-27 20:38:57 [vllm.py:1709] Enforce eager set, disabling torch.compile, CUDAGraphs, and JIT kernel warmup. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none and --kernel_config.enable_jit_warmup=False
+(MainProcess pid=74) WARNING 11-27 20:38:57 [vllm.py:1733] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(MainProcess pid=74) INFO 11-27 20:38:57 [kernel.py:517] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'], gelu_and_mul_sparse=['triton', 'native'])
+(MainProcess pid=74) INFO 11-27 20:38:57 [vllm.py:1917] Cudagraph is disabled under eager mode
+(MainProcess pid=74) INFO 11-27 20:38:57 [compilation.py:393] Enabled custom fusions: norm_quant, act_quant
+Fetching 10 files:   0%|          | 0/10 [00:00<?, ?it/s]Fetching 10 files:  70%|███████   | 7/10 [00:00<00:00, 49.24it/s]Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 41.39it/s]
+(MainProcess pid=74) INFO 11-27 20:39:01 [numa_utils.py:575] Automatic NUMA binding unavailable on this host; starting unbound. Enable debug logging for the skip reason.
+(EngineCore pid=168) INFO 11-27 20:39:01 [core.py:153] Initializing a V1 LLM engine (v0.34.0) with config: model='Qwen/Qwen2.5-Coder-32B-Instruct-AWQ', speculative_config=None, tokenizer='Qwen/Qwen2.5-Coder-32B-Instruct-AWQ', skip_tokenizer_init=False, tokenizer_mode=auto, revision=main, tokenizer_revision=main, trust_remote_code=False, dtype=torch.float16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=auto_awq, quantization_config=None, enforce_eager=True, aux_output_config=AuxOutputConfig(enable_return_routed_experts=False, max_bytes=None), kv_cache_dtype=fp8, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, custom_histogram_buckets=None, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=Qwen/Qwen2.5-Coder-32B-Instruct-AWQ, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_token_budget': 5120, 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'cudagraph_decoder_replay': True, 'decoder_replay_cudagraph_capture_sizes': [], 'decoder_replay_trim_threshold': 768, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'use_breakable_cudagraph': False, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'prefill_cudagraph_capture_token_sizes': None, 'max_prefill_cudagraph_capture_tokens': None, 'decode_cudagraph_capture_request_sizes': None, 'max_decode_cudagraph_capture_requests': None, 'max_decode_cudagraph_capture_tokens': None, 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'], gelu_and_mul_sparse=['triton', 'native']), enable_flashinfer_autotune=True, enable_rocm_segmented_attn_autotune=False, enable_rocm_aiter_gemm_warmup=False, enable_cutedsl_warmup=True, enable_jit_warmup=False, monokernel=False, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None, rdna_hybrid_w4a16_prefill_dequant='disable')
+(EngineCore pid=168) INFO 11-27 20:39:01 [multiproc_executor.py:191] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.19.2.2 (local), world_size=2, local_world_size=2
+(Worker pid=176) INFO 11-27 20:39:02 [parallel_state.py:1935] world_size=2 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_a2afcaee7c8042c0977f5dfe493635c4 backend=nccl
+(Worker pid=177) INFO 11-27 20:39:02 [parallel_state.py:1935] world_size=2 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_a2afcaee7c8042c0977f5dfe493635c4 backend=nccl
+(Worker pid=176) INFO 11-27 20:39:04 [pynccl.py:148] vLLM is using nccl==2.30.7
+(Worker pid=176) WARNING 11-27 20:39:04 [symm_mem.py:67] SymmMemCommunicator: Device capability 7.5 not supported, communicator is not available.
+(Worker pid=177) WARNING 11-27 20:39:04 [symm_mem.py:67] SymmMemCommunicator: Device capability 7.5 not supported, communicator is not available.
+(Worker pid=176) WARNING 11-27 20:39:04 [flashinfer_all_reduce.py:446] FlashInfer All Reduce is disabled because it is not supported for world_size=2.
+(Worker pid=177) WARNING 11-27 20:39:04 [flashinfer_all_reduce.py:446] FlashInfer All Reduce is disabled because it is not supported for world_size=2.
+(Worker pid=176) INFO 11-27 20:39:04 [cuda_communicator.py:380] Using ['CUSTOM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=176) INFO 11-27 20:39:04 [parallel_state.py:2394] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, ETP rank 0, EP rank N/A, EPLB rank N/A
+(Worker pid=176) INFO 11-27 20:39:05 [cuda.py:239] NVIDIA Confidential Computing not detected via NVML
+(Worker pid=177) INFO 11-27 20:39:05 [cuda.py:239] NVIDIA Confidential Computing not detected via NVML
+(Worker_TP0 pid=176) INFO 11-27 20:39:06 [model_runner.py:412] Loading model from scratch...
+(Worker_TP1 pid=177) INFO 11-27 20:39:06 [auto_awq.py:457] Using MarlinLinearKernel for AutoAWQMarlinLinearMethod
+(Worker_TP0 pid=176) INFO 11-27 20:39:06 [__init__.py:949] Using MarlinLinearKernel for mixed-precision linear
+(Worker_TP0 pid=176) INFO 11-27 20:39:06 [auto_awq.py:457] Using MarlinLinearKernel for AutoAWQMarlinLinearMethod
+(Worker_TP1 pid=177) ERROR 11-27 20:39:06 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP0 pid=176) ERROR 11-27 20:39:06 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP1 pid=177) ERROR 11-27 20:39:06 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP1 pid=177) ERROR 11-27 20:39:06 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP0 pid=176) ERROR 11-27 20:39:06 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP0 pid=176) ERROR 11-27 20:39:06 [fa_utils.py:212] Cannot use FA version 2 is not supported due to FA2 is only supported on devices with compute capability >= 8
+(Worker_TP0 pid=176) INFO 11-27 20:39:06 [cuda.py:549] Using TRITON_ATTN attention backend out of potential backends: ['TRITON_ATTN'].
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091] WorkerProc failed to start.
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091] Traceback (most recent call last):
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 1057, in worker_main
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     worker = WorkerProc(*args, **kwargs)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return func(*args, **kwargs)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 822, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.worker.load_model()
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~~~~~~~~~~~~~~~^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/worker/gpu_worker.py", line 603, in load_model
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.model_runner.load_model(load_dummy_weights=load_dummy_weights)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/worker/gpu/model_runner.py", line 416, in load_model
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.model = model or model_loader.load_model(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                           ~~~~~~~~~~~~~~~~~~~~~~~^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=self.vllm_config,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         model_config=self.vllm_config.model_config,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return func(*args, **kwargs)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/model_loader/base_loader.py", line 89, in load_model
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     model = self.create_model(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=vllm_config,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         model_config=model_config,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=prefix,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/model_loader/base_loader.py", line 54, in create_model
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     model = initialize_model(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=vllm_config,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         model_config=model_config,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=prefix,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return func(*args, **kwargs)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/model_loader/utils.py", line 101, in initialize_model
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     model = model_class(vllm_config=vllm_config, prefix=prefix)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 472, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.model = Qwen2Model(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                  ~~~~~~~~~~^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=vllm_config, prefix=maybe_prefix(prefix, "model")
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/compilation/decorators.py", line 403, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     old_init(self, *args, **kwargs)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 377, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.start_layer, self.end_layer, self.layers = make_layers(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                                                     ~~~~~~~~~~~^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         config.num_hidden_layers,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<6 lines>...
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=f"{prefix}.layers",
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/utils.py", line 977, in make_layers
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     + get_offloader().wrap_modules(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         layer_fn(prefix=f"{prefix}.{idx}") for idx in range(start_layer, end_layer)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/offloader/base.py", line 120, in wrap_modules
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return list(modules_generator)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/utils.py", line 978, in <genexpr>
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     layer_fn(prefix=f"{prefix}.{idx}") for idx in range(start_layer, end_layer)
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 379, in <lambda>
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     lambda prefix: decoder_layer_type(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                    ~~~~~~~~~~~~~~~~~~^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         config=config,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<2 lines>...
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=prefix,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ),
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 274, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.self_attn = Qwen2Attention(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                      ~~~~~~~~~~~~~~^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         hidden_size=self.hidden_size,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<10 lines>...
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         rms_norm_eps=config.rms_norm_eps,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 196, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.attn = attn_cls(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                 ~~~~~~~~^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         self.num_heads,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<7 lines>...
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         **attention_kwargs,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/layers/attention/attention.py", line 442, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.impl = impl_cls(  # type: ignore[assignment]  # impl_cls always returns an AttentionImpl subclass
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                 ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         num_heads,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<9 lines>...
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         **extra_impl_args,
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/attention/backends/triton_attn.py", line 523, in __init__
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     raise ValueError(
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<3 lines>...
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP1 pid=177) ERROR 11-27 20:39:08 [multiproc_executor.py:1091] ValueError: FP8 KV cache is not supported by the Triton attention backend on Tesla T4 (compute capability 7.5); native FP8 (fp8e4nv) requires SM89+. Re-run with --kv-cache-dtype float16.
+(EngineCore pid=168) INFO 11-27 20:39:08 [multiproc_executor.py:614] [shutdown] Executor: waiting for worker exit count=2
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091] WorkerProc failed to start.
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091] Traceback (most recent call last):
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 1057, in worker_main
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     worker = WorkerProc(*args, **kwargs)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return func(*args, **kwargs)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 822, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.worker.load_model()
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~~~~~~~~~~~~~~~^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/worker/gpu_worker.py", line 603, in load_model
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.model_runner.load_model(load_dummy_weights=load_dummy_weights)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/worker/gpu/model_runner.py", line 416, in load_model
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.model = model or model_loader.load_model(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                           ~~~~~~~~~~~~~~~~~~~~~~~^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=self.vllm_config,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         model_config=self.vllm_config.model_config,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return func(*args, **kwargs)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/model_loader/base_loader.py", line 89, in load_model
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     model = self.create_model(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=vllm_config,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         model_config=model_config,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=prefix,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/model_loader/base_loader.py", line 54, in create_model
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     model = initialize_model(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=vllm_config,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         model_config=model_config,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=prefix,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return func(*args, **kwargs)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/model_loader/utils.py", line 101, in initialize_model
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     model = model_class(vllm_config=vllm_config, prefix=prefix)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 472, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.model = Qwen2Model(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                  ~~~~~~~~~~^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         vllm_config=vllm_config, prefix=maybe_prefix(prefix, "model")
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/compilation/decorators.py", line 403, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     old_init(self, *args, **kwargs)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 377, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.start_layer, self.end_layer, self.layers = make_layers(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                                                     ~~~~~~~~~~~^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         config.num_hidden_layers,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<6 lines>...
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=f"{prefix}.layers",
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/utils.py", line 977, in make_layers
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     + get_offloader().wrap_modules(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         layer_fn(prefix=f"{prefix}.{idx}") for idx in range(start_layer, end_layer)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/offloader/base.py", line 120, in wrap_modules
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     return list(modules_generator)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/utils.py", line 978, in <genexpr>
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     layer_fn(prefix=f"{prefix}.{idx}") for idx in range(start_layer, end_layer)
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 379, in <lambda>
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     lambda prefix: decoder_layer_type(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                    ~~~~~~~~~~~~~~~~~~^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         config=config,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<2 lines>...
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         prefix=prefix,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ),
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 274, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.self_attn = Qwen2Attention(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                      ~~~~~~~~~~~~~~^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         hidden_size=self.hidden_size,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<10 lines>...
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         rms_norm_eps=config.rms_norm_eps,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/models/qwen2.py", line 196, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.attn = attn_cls(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                 ~~~~~~~~^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         self.num_heads,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<7 lines>...
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         **attention_kwargs,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/model_executor/layers/attention/attention.py", line 442, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     self.impl = impl_cls(  # type: ignore[assignment]  # impl_cls always returns an AttentionImpl subclass
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]                 ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         num_heads,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<9 lines>...
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         **extra_impl_args,
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]         ^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ^
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/attention/backends/triton_attn.py", line 523, in __init__
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     raise ValueError(
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     ...<3 lines>...
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091]     )
+(Worker_TP0 pid=176) ERROR 11-27 20:39:08 [multiproc_executor.py:1091] ValueError: FP8 KV cache is not supported by the Triton attention backend on Tesla T4 (compute capability 7.5); native FP8 (fp8e4nv) requires SM89+. Re-run with --kv-cache-dtype float16.
+(EngineCore pid=168) INFO 11-27 20:39:08 [multiproc_executor.py:621] [shutdown] Executor: all workers exited gracefully
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757] EngineCore failed to start.
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757] Traceback (most recent call last):
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/engine/core.py", line 1728, in run_engine_core
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     return func(*args, **kwargs)
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/engine/core.py", line 1399, in __init__
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     super().__init__(
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     ~~~~~~~~~~~~~~~~^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]         vllm_config,
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]         ^^^^^^^^^^^^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     ...<3 lines>...
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]         internal_dp_balancing,
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]         ^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     )
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     ^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/engine/core.py", line 164, in __init__
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     self.model_executor = executor_class(vllm_config)
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]                           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 154, in __init__
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     super().__init__(vllm_config)
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     return func(*args, **kwargs)
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/abstract.py", line 121, in __init__
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     self._init_executor()
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     ~~~~~~~~~~~~~~~~~~~^^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 262, in _init_executor
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     self.workers = WorkerProc.wait_for_ready(unready_workers)
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]                    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]   File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 950, in wait_for_ready
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757]     raise e from None
+(EngineCore pid=168) ERROR 11-27 20:39:08 [core.py:1757] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+Process EngineCore:
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/engine/core.py", line 1761, in run_engine_core
+    raise e
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/engine/core.py", line 1728, in run_engine_core
+    engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/engine/core.py", line 1399, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        vllm_config,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        internal_dp_balancing,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/engine/core.py", line 164, in __init__
+    self.model_executor = executor_class(vllm_config)
+                          ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 154, in __init__
+    super().__init__(vllm_config)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/vllm/tracing/otel.py", line 175, in sync_wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/abstract.py", line 121, in __init__
+    self._init_executor()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 262, in _init_executor
+    self.workers = WorkerProc.wait_for_ready(unready_workers)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/vllm/v1/executor/multiproc_executor.py", line 950, in wait_for_ready
+    raise e from None
+Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+/usr/lib/python3.13/multiprocessing/resource_tracker.py:479: UserWarning: resource_tracker: There appear to be 2 leaked shared_memory objects to clean up at shutdown: {'/psm_72b2199a', '/psm_c2dae111'}
+  warnings.warn(
+ERROR AL CARGAR EL MODELO: RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {'EngineCore': 1}

@@ -1,0 +1,12 @@
+diff --git a/sympy/core/mod.py b/sympy/core/mod.py
+--- a/sympy/core/mod.py
++++ b/sympy/core/mod.py
+@@ -53,6 +53,8 @@
+                 return nan
+             if p is S.Zero or p == q or p == -q or (p.is_integer and q == 1):
+                 return S.Zero
++            if isinstance(p, Piecewise) and isinstance(q, Piecewise):
++                return Piecewise(*[(pi % qi, ci) for pi, qi, ci in zip(p.args, q.args, p.conds)])
+ 
+             if q.is_Number:
+                 if p.is_Number:

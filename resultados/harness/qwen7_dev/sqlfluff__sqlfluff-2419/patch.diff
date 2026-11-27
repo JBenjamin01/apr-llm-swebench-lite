@@ -1,0 +1,38 @@
+diff --git a/src/sqlfluff/rules/L060.py b/src/sqlfluff/rules/L060.py
+--- a/src/sqlfluff/rules/L060.py
++++ b/src/sqlfluff/rules/L060.py
+@@ -44,8 +44,32 @@
+             return None
+ 
+         # Only care if the function is ``IFNULL`` or ``NVL``.
+-        if context.segment.raw_upper not in {"IFNULL", "NVL"}:
+-            return None
++        if context.segment.raw_upper == "IFNULL":
++            return LintResult(context.segment, [
++                LintFix.replace(
++                    context.segment,
++                    [
++                        CodeSegment(
++                            raw="COALESCE",
++                            name="function_name_identifier",
++                            type="function_name_identifier",
++                        )
++                    ],
++                )
++            ])
++        elif context.segment.raw_upper == "NVL":
++            return LintResult(context.segment, [
++                LintFix.replace(
++                    context.segment,
++                    [
++                        CodeSegment(
++                            raw="COALESCE",
++                            name="function_name_identifier",
++                            type="function_name_identifier",
++                        )
++                    ],
++                )
++            ])
+ 
+         # Create fix to replace ``IFNULL`` or ``NVL`` with ``COALESCE``.
+         fix = LintFix.replace(

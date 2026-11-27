@@ -1,0 +1,20 @@
+diff --git a/src/sqlfluff/rules/L060.py b/src/sqlfluff/rules/L060.py
+--- a/src/sqlfluff/rules/L060.py
++++ b/src/sqlfluff/rules/L060.py
+@@ -44,7 +44,8 @@
+             return None
+ 
+         # Only care if the function is ``IFNULL`` or ``NVL``.
+-        if context.segment.raw_upper not in {"IFNULL", "NVL"}:
++        incorrect_function = context.segment.raw_upper
++        if incorrect_function not in {"IFNULL", "NVL"}:
+             return None
+ 
+         # Create fix to replace ``IFNULL`` or ``NVL`` with ``COALESCE``.
+@@ -59,4 +60,5 @@
+             ],
+         )
+ 
+-        return LintResult(context.segment, [fix])
++        message = f"Use 'COALESCE' instead of '{incorrect_function}'."
++        return LintResult(context.segment, [fix], message=message)

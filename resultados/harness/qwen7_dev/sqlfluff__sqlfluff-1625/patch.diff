@@ -1,0 +1,15 @@
+diff --git a/src/sqlfluff/rules/L031.py b/src/sqlfluff/rules/L031.py
+--- a/src/sqlfluff/rules/L031.py
++++ b/src/sqlfluff/rules/L031.py
+@@ -73,6 +73,11 @@
+                 return None
+             from_expression_element = from_expression_element.get_child(
+                 "table_expression"
++            )
++            if not from_expression_element:
++                return None
++            from_expression_element = from_expression_element.get_child(
++                "object_reference"
+             )
+ 
+             # Find base table

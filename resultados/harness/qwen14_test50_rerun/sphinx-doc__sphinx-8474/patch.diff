@@ -1,0 +1,11 @@
+diff --git a/sphinx/domains/std.py b/sphinx/domains/std.py
+--- a/sphinx/domains/std.py
++++ b/sphinx/domains/std.py
+@@ -844,7 +844,6 @@
+             return None
+ 
+         if figtype != 'section' and env.config.numfig is False:
+-            logger.warning(__('numfig is disabled. :numref: is ignored.'), location=node)
+             return contnode
+ 
+         try:

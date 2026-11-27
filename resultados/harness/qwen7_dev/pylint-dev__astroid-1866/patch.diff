@@ -1,0 +1,15 @@
+diff --git a/astroid/brain/brain_builtin_inference.py b/astroid/brain/brain_builtin_inference.py
+--- a/astroid/brain/brain_builtin_inference.py
++++ b/astroid/brain/brain_builtin_inference.py
+@@ -953,7 +953,10 @@
+     keyword_values: dict[str, str] = {k: v.value for k, v in inferred_keyword.items()}
+ 
+     try:
+-        formatted_string = format_template.format(*pos_values, **keyword_values)
++        if format_template is None:
++    formatted_string = ""
++else:
++    formatted_string = format_template.format(*pos_values, **keyword_values)
+     except (IndexError, KeyError):
+         # If there is an IndexError there are too few arguments to interpolate
+         return iter([util.Uninferable])

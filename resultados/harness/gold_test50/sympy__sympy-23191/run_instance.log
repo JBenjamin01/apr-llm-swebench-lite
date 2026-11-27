@@ -1,0 +1,101 @@
+2026-11-27 07:12:08,004 - INFO - Image not found locally, attempting to pull...
+2026-11-27 07:12:17,906 - INFO - Creating container for sympy__sympy-23191...
+2026-11-27 07:12:18,958 - INFO - Container for sympy__sympy-23191 created: 16c25f67aed256c9c542d534244493e790039344d8c909b74af9a582d9be0ff8
+2026-11-27 07:12:19,193 - INFO - Container for sympy__sympy-23191 started: 16c25f67aed256c9c542d534244493e790039344d8c909b74af9a582d9be0ff8
+2026-11-27 07:12:19,195 - INFO - Intermediate patch for sympy__sympy-23191 written to logs/run_evaluation/gold_test50/gold/sympy__sympy-23191/patch.diff, now applying to container...
+2026-11-27 07:12:19,408 - INFO - >>>>> Applied Patch:
+Checking patch sympy/printing/pretty/pretty.py...
+Applied patch sympy/printing/pretty/pretty.py cleanly.
+
+2026-11-27 07:12:19,972 - INFO - Git diff before:
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..3917fdd71f 100755
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -1144,22 +1144,24 @@ def _print_BasisDependent(self, expr):
+             if '\n' in partstr:
+                 tempstr = partstr
+                 tempstr = tempstr.replace(vectstrs[i], '')
+-                if '\N{right parenthesis extension}' in tempstr:   # If scalar is a fraction
++                if '\N{RIGHT PARENTHESIS EXTENSION}' in tempstr:   # If scalar is a fraction
+                     for paren in range(len(tempstr)):
+                         flag[i] = 1
+-                        if tempstr[paren] == '\N{right parenthesis extension}':
+-                            tempstr = tempstr[:paren] + '\N{right parenthesis extension}'\
++                        if tempstr[paren] == '\N{RIGHT PARENTHESIS EXTENSION}' and tempstr[paren + 1] == '\n':
++                            # We want to place the vector string after all the right parentheses, because
++                            # otherwise, the vector will be in the middle of the string
++                            tempstr = tempstr[:paren] + '\N{RIGHT PARENTHESIS EXTENSION}'\
+                                          + ' '  + vectstrs[i] + tempstr[paren + 1:]
+                             break
+                 elif '\N{RIGHT PARENTHESIS LOWER HOOK}' in tempstr:
+-                    flag[i] = 1
+-                    tempstr = tempstr.replace('\N{RIGHT PARENTHESIS LOWER HOOK}',
+-                                        '\N{RIGHT PARENTHESIS LOWER HOOK}'
+-                                        + ' ' + vectstrs[i])
+-                else:
+-                    tempstr = tempstr.replace('\N{RIGHT PARENTHESIS UPPER HOOK}',
+-                                        '\N{RIGHT PARENTHESIS UPPER HOOK}'
+-                                        + ' ' + vectstrs[i])
++                    # We want to place the vector string after all the right parentheses, because
++                    # otherwise, the vector will be in the middle of the string. For this reason,
++                    # we insert the vector string at the rightmost index.
++                    index = tempstr.rfind('\N{RIGHT PARENTHESIS LOWER HOOK}')
++                    if index != -1: # then this character was found in this string
++                        flag[i] = 1
++                        tempstr = tempstr[:index] + '\N{RIGHT PARENTHESIS LOWER HOOK}'\
++                                     + ' '  + vectstrs[i] + tempstr[index + 1:]
+                 o1[i] = tempstr
+ 
+         o1 = [x.split('\n') for x in o1]
+2026-11-27 07:12:19,972 - INFO - Eval script for sympy__sympy-23191 written to logs/run_evaluation/gold_test50/gold/sympy__sympy-23191/eval.sh; copying to container...
+2026-11-27 07:12:24,423 - INFO - Test runtime: 4.37 seconds
+2026-11-27 07:12:24,425 - INFO - Test output for sympy__sympy-23191 written to logs/run_evaluation/gold_test50/gold/sympy__sympy-23191/test_output.txt
+2026-11-27 07:12:24,499 - INFO - Git diff after:
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+index 66461181d0..3917fdd71f 100755
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -1144,22 +1144,24 @@ def _print_BasisDependent(self, expr):
+             if '\n' in partstr:
+                 tempstr = partstr
+                 tempstr = tempstr.replace(vectstrs[i], '')
+-                if '\N{right parenthesis extension}' in tempstr:   # If scalar is a fraction
++                if '\N{RIGHT PARENTHESIS EXTENSION}' in tempstr:   # If scalar is a fraction
+                     for paren in range(len(tempstr)):
+                         flag[i] = 1
+-                        if tempstr[paren] == '\N{right parenthesis extension}':
+-                            tempstr = tempstr[:paren] + '\N{right parenthesis extension}'\
++                        if tempstr[paren] == '\N{RIGHT PARENTHESIS EXTENSION}' and tempstr[paren + 1] == '\n':
++                            # We want to place the vector string after all the right parentheses, because
++                            # otherwise, the vector will be in the middle of the string
++                            tempstr = tempstr[:paren] + '\N{RIGHT PARENTHESIS EXTENSION}'\
+                                          + ' '  + vectstrs[i] + tempstr[paren + 1:]
+                             break
+                 elif '\N{RIGHT PARENTHESIS LOWER HOOK}' in tempstr:
+-                    flag[i] = 1
+-                    tempstr = tempstr.replace('\N{RIGHT PARENTHESIS LOWER HOOK}',
+-                                        '\N{RIGHT PARENTHESIS LOWER HOOK}'
+-                                        + ' ' + vectstrs[i])
+-                else:
+-                    tempstr = tempstr.replace('\N{RIGHT PARENTHESIS UPPER HOOK}',
+-                                        '\N{RIGHT PARENTHESIS UPPER HOOK}'
+-                                        + ' ' + vectstrs[i])
++                    # We want to place the vector string after all the right parentheses, because
++                    # otherwise, the vector will be in the middle of the string. For this reason,
++                    # we insert the vector string at the rightmost index.
++                    index = tempstr.rfind('\N{RIGHT PARENTHESIS LOWER HOOK}')
++                    if index != -1: # then this character was found in this string
++                        flag[i] = 1
++                        tempstr = tempstr[:index] + '\N{RIGHT PARENTHESIS LOWER HOOK}'\
++                                     + ' '  + vectstrs[i] + tempstr[index + 1:]
+                 o1[i] = tempstr
+ 
+         o1 = [x.split('\n') for x in o1]
+2026-11-27 07:12:24,499 - INFO - Grading answer for sympy__sympy-23191...
+2026-11-27 07:12:24,501 - INFO - report: {'sympy__sympy-23191': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': True, 'resolved': True, 'infra_failure': False, 'tests_status': {'FAIL_TO_PASS': {'success': ['test_issue_23058'], 'failure': []}, 'PASS_TO_PASS': {'success': ['test_str_printing', 'test_pretty_print_unicode_v', 'test_latex_printing'], 'failure': []}, 'FAIL_TO_FAIL': {'success': [], 'failure': []}, 'PASS_TO_FAIL': {'success': [], 'failure': []}}}}
+Result for sympy__sympy-23191: resolved: True
+2026-11-27 07:12:24,501 - INFO - Attempting to stop container sweb.eval.sympy__sympy-23191.gold_test50...
+2026-11-27 07:12:40,548 - INFO - Container sweb.eval.sympy__sympy-23191.gold_test50 stopped successfully.
+2026-11-27 07:12:40,549 - INFO - Attempting to remove container sweb.eval.sympy__sympy-23191.gold_test50...
+2026-11-27 07:12:40,647 - INFO - Container sweb.eval.sympy__sympy-23191.gold_test50 removed successfully.

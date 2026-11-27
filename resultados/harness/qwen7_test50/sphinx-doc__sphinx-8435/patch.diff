@@ -1,0 +1,18 @@
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -511,6 +511,14 @@
+             return args + ((' -> %s' % retann) if retann else '')
+         else:
+             return ''
++
++        # Apply autodoc_type_aliases to args and retann
++        if self.config.autodoc_type_aliases:
++            for alias, target in self.config.autodoc_type_aliases.items():
++                args = args.replace(alias, target)
++                retann = retann.replace(alias, target)
++
++        return args + ((' -> %s' % retann) if retann else '')
+ 
+     def add_directive_header(self, sig: str) -> None:
+         """Add the directive header and options to the generated content."""

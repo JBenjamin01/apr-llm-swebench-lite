@@ -1,0 +1,11 @@
+diff --git a/sympy/printing/pretty/pretty.py b/sympy/printing/pretty/pretty.py
+--- a/sympy/printing/pretty/pretty.py
++++ b/sympy/printing/pretty/pretty.py
+@@ -99,7 +99,6 @@
+         pform = prettyForm(*pform.left('('))
+         pform = prettyForm(*pform.right(')'))
+         pform = prettyForm(*pform.left(self._print(U('MULTIPLICATION SIGN'))))
+-        pform = prettyForm(*pform.left(')'))
+         pform = prettyForm(*pform.left(self._print(vec1)))
+         pform = prettyForm(*pform.left('('))
+         return pform

@@ -1,0 +1,12 @@
+diff --git a/src/marshmallow/schema.py b/src/marshmallow/schema.py
+--- a/src/marshmallow/schema.py
++++ b/src/marshmallow/schema.py
+@@ -891,7 +891,7 @@
+                             data[idx].pop(field_name, None)
+             else:
+                 try:
+-                    value = data[field_obj.attribute or field_name]
++                    value = data.get(field_obj.attribute or field_name, missing)
+                 except KeyError:
+                     pass
+                 else:

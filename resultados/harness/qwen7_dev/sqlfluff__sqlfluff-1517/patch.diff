@@ -1,0 +1,12 @@
+diff --git a/src/sqlfluff/core/parser/helpers.py b/src/sqlfluff/core/parser/helpers.py
+--- a/src/sqlfluff/core/parser/helpers.py
++++ b/src/sqlfluff/core/parser/helpers.py
+@@ -32,7 +32,7 @@
+                 initial_str, current_str
+             )
+         )
+-    return True
++    return False
+ 
+ 
+ def trim_non_code_segments(

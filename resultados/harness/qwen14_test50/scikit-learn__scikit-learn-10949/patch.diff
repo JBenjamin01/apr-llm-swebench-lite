@@ -1,0 +1,15 @@
+diff --git a/sklearn/utils/validation.py b/sklearn/utils/validation.py
+--- a/sklearn/utils/validation.py
++++ b/sklearn/utils/validation.py
+@@ -515,6 +515,11 @@
+                 raise ValueError("Complex data not supported\n"
+                                  "{}\n".format(array))
+ 
++        if warn_on_dtype and dtype_orig is not None and array.dtype != dtype_orig:
++            msg = ("Data with input dtype %s was converted to %s."
++                   % (dtype_orig, array.dtype))
++            warnings.warn(msg, DataConversionWarning)
++
+         # It is possible that the np.array(..) gave no warning. This happens
+         # when no dtype conversion happened, for example dtype = None. The
+         # result is that np.array(..) produces an array of complex dtype

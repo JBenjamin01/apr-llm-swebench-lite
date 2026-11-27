@@ -1,0 +1,18 @@
+diff --git a/django/contrib/admin/checks.py b/django/contrib/admin/checks.py
+--- a/django/contrib/admin/checks.py
++++ b/django/contrib/admin/checks.py
+@@ -923,6 +923,14 @@
+                 checks.Error(
+                     f"The value of '{label}' must not be a many-to-many field or a "
+                     f"reverse foreign key.",
++                    obj=obj.__class__,
++                    id="admin.E109",
++                )
++            ]
++        elif isinstance(field, models.ForeignKey):
++            return [
++                checks.Error(
++                    f"The value of '{label}' must not be a ForeignKey.",
+                     obj=obj.__class__,
+                     id="admin.E109",
+                 )

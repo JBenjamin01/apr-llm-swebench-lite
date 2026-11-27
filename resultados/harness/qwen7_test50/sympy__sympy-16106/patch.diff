@@ -1,0 +1,18 @@
+diff --git a/sympy/printing/mathml.py b/sympy/printing/mathml.py
+--- a/sympy/printing/mathml.py
++++ b/sympy/printing/mathml.py
+@@ -445,8 +445,12 @@
+ 
+     def _print_Basic(self, e):
+         x = self.dom.createElement(self.mathml_tag(e))
+-        for arg in e.args:
+-            x.appendChild(self._print(arg))
++        if isinstance(e, Indexed):
++            x.appendChild(self._print(e.base))
++            x.appendChild(self._print(e.index))
++        else:
++            for arg in e.args:
++                x.appendChild(self._print(arg))
+         return x
+ 
+     def _print_AssocOp(self, e):

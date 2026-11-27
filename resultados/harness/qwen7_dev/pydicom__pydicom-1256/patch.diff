@@ -1,0 +1,12 @@
+diff --git a/pydicom/jsonrep.py b/pydicom/jsonrep.py
+--- a/pydicom/jsonrep.py
++++ b/pydicom/jsonrep.py
+@@ -155,7 +155,7 @@
+                 )
+                 return empty_value_for_VR(self.vr, raw=True)
+             return self.bulk_data_element_handler(self.tag, self.vr, value)
+-        return empty_value_for_VR(self.vr)
++    return self.get_regular_element_value(value)
+ 
+     def get_regular_element_value(self, value):
+         """Return a the data element value created from a json "Value" entry.

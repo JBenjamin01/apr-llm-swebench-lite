@@ -1,0 +1,12 @@
+diff --git a/django/forms/models.py b/django/forms/models.py
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -189,6 +189,8 @@
+             f: field_dict.get(f) for f in fields
+             if (not exclude or f not in exclude) and f not in ignored
+         }
++        # Remove duplicates by converting to a dict and back to a list
++        field_dict = dict.fromkeys(field_dict)
+     return field_dict
+ 
+ 

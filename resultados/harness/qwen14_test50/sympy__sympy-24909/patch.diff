@@ -1,0 +1,16 @@
+diff --git a/sympy/physics/units/prefixes.py b/sympy/physics/units/prefixes.py
+--- a/sympy/physics/units/prefixes.py
++++ b/sympy/physics/units/prefixes.py
+@@ -94,7 +94,11 @@
+                     return PREFIXES[p]
+             return fact
+ 
+-        return self.scale_factor * other
++        return Quantity(
++            "%s%s" % (self.name, other.name),
++            abbrev=("%s%s" % (self.abbrev, other.abbrev)),
++            is_prefixed=True,
++        )
+ 
+     def __truediv__(self, other):
+         if not hasattr(other, "scale_factor"):

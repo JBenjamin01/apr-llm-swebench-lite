@@ -1,0 +1,134 @@
+diff --git a/astropy/wcs/wcs.py b/astropy/wcs/wcs.py
+--- a/astropy/wcs/wcs.py
++++ b/astropy/wcs/wcs.py
+@@ -1352,68 +1352,68 @@
+         return self._array_converter(
+             lambda xy, o: self.wcs.p2s(xy, o)['world'],
+             'output', *args, **kwargs)
+-    wcs_pix2world.__doc__ = """
+-        Transforms pixel coordinates to world coordinates by doing
+-        only the basic `wcslib`_ transformation.
+-
+-        No `SIP`_ or `distortion paper`_ table lookup correction is
+-        applied.  To perform distortion correction, see
+-        `~astropy.wcs.WCS.all_pix2world`,
+-        `~astropy.wcs.WCS.sip_pix2foc`, `~astropy.wcs.WCS.p4_pix2foc`,
+-        or `~astropy.wcs.WCS.pix2foc`.
+-
+-        Parameters
+-        ----------
+-        {0}
+-
+-            For a transformation that is not two-dimensional, the
+-            two-argument form must be used.
+-
+-        {1}
+-
+-        Returns
+-        -------
+-
+-        {2}
+-
+-        Raises
+-        ------
+-        MemoryError
+-            Memory allocation failed.
+-
+-        SingularMatrixError
+-            Linear transformation matrix is singular.
+-
+-        InconsistentAxisTypesError
+-            Inconsistent or unrecognized coordinate axis types.
+-
+-        ValueError
+-            Invalid parameter value.
+-
+-        ValueError
+-            Invalid coordinate transformation parameters.
+-
+-        ValueError
+-            x- and y-coordinate arrays are not the same size.
+-
+-        InvalidTransformError
+-            Invalid coordinate transformation parameters.
+-
+-        InvalidTransformError
+-            Ill-conditioned coordinate transformation parameters.
+-
+-        Notes
+-        -----
+-        The order of the axes for the result is determined by the
+-        ``CTYPEia`` keywords in the FITS header, therefore it may not
+-        always be of the form (*ra*, *dec*).  The
+-        `~astropy.wcs.Wcsprm.lat`, `~astropy.wcs.Wcsprm.lng`,
+-        `~astropy.wcs.Wcsprm.lattyp` and `~astropy.wcs.Wcsprm.lngtyp`
+-        members can be used to determine the order of the axes.
+-
+-        """.format(__.TWO_OR_MORE_ARGS('naxis', 8),
+-                   __.RA_DEC_ORDER(8),
+-                   __.RETURNS('world coordinates, in degrees', 8))
++        wcs_pix2world.__doc__ = """
++            Transforms pixel coordinates to world coordinates by doing
++            only the basic `wcslib`_ transformation.
++
++            No `SIP`_ or `distortion paper`_ table lookup correction is
++            applied.  To perform distortion correction, see
++            `~astropy.wcs.WCS.all_pix2world`,
++            `~astropy.wcs.WCS.sip_pix2foc`, `~astropy.wcs.WCS.p4_pix2foc`,
++            or `~astropy.wcs.WCS.pix2foc`.
++
++            Parameters
++            ----------
++            {0}
++
++                For a transformation that is not two-dimensional, the
++                two-argument form must be used.
++
++            {1}
++
++            Returns
++            -------
++
++            {2}
++
++            Raises
++            ------
++            MemoryError
++                Memory allocation failed.
++
++            SingularMatrixError
++                Linear transformation matrix is singular.
++
++            InconsistentAxisTypesError
++                Inconsistent or unrecognized coordinate axis types.
++
++            ValueError
++                Invalid parameter value.
++
++            ValueError
++                Invalid coordinate transformation parameters.
++
++            ValueError
++                x- and y-coordinate arrays are not the same size.
++
++            InvalidTransformError
++                Invalid coordinate transformation parameters.
++
++            InvalidTransformError
++                Ill-conditioned coordinate transformation parameters.
++
++            Notes
++            -----
++            The order of the axes for the result is determined by the
++            ``CTYPEia`` keywords in the FITS header, therefore it may not
++            always be of the form (*ra*, *dec*).  The
++            `~astropy.wcs.Wcsprm.lat`, `~astropy.wcs.Wcsprm.lng`,
++            `~astropy.wcs.Wcsprm.lattyp` and `~astropy.wcs.Wcsprm.lngtyp`
++            members can be used to determine the order of the axes.
++
++            """.format(__.TWO_OR_MORE_ARGS('naxis', 8),
++                       __.RA_DEC_ORDER(8),
++                       __.RETURNS('world coordinates, in degrees', 8))
+ 
+     def _all_world2pix(self, world, origin, tolerance, maxiter, adaptive,
+                        detect_divergence, quiet):
