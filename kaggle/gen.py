@@ -166,13 +166,14 @@ def truncate(src, issue, budget, ntok):
 # Medicion de GPU (potencia y memoria) con NVML a 1 Hz
 # --------------------------------------------------------------------------
 class GpuMonitor:
-    def __init__(self, period=1.0):
+    def __init__(self, indices=None, period=1.0):
         import pynvml
 
         pynvml.nvmlInit()
         self.nvml = pynvml
-        self.handles = [pynvml.nvmlDeviceGetHandleByIndex(i)
-                        for i in range(pynvml.nvmlDeviceGetCount())]
+        if indices is None:
+            indices = range(pynvml.nvmlDeviceGetCount())
+        self.handles = [pynvml.nvmlDeviceGetHandleByIndex(i) for i in indices]
         self.period = period
         self.samples = []  # (t, watts_total, mem_gb_total)
         self._stop = threading.Event()
@@ -218,12 +219,22 @@ def main():
     ap.add_argument("--sample-seed", type=int, default=2026)
     ap.add_argument("--gpu-util", type=float, default=0.92)
     ap.add_argument("--kv", default=None, help="sobrescribe kv_cache_dtype")
+    ap.add_argument("--gpu", type=int, default=None,
+                    help="fija el modelo a una GPU (solo modelos de 1 GPU)")
     args = ap.parse_args()
-
-    from datasets import load_dataset
 
     hf_id, tp, kv = MODELS[args.model]
     kv = args.kv or kv
+    # Mismo orden de GPU en CUDA y en NVML; debe fijarse antes de importar torch/vllm
+    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+    if args.gpu is not None:
+        assert tp == 1, "--gpu solo para modelos de una GPU"
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
+        gpu_idx = [args.gpu]
+    else:
+        gpu_idx = list(range(tp))
+
+    from datasets import load_dataset
     os.makedirs(OUT_DIR, exist_ok=True)
     tag = f"{args.split}{args.sample}" if args.sample else args.split
     stem = f"{OUT_DIR}/{args.model}_{tag}"
@@ -254,7 +265,7 @@ def main():
     if not rows:
         return
 
-    mon = GpuMonitor()
+    mon = GpuMonitor(gpu_idx)
     mem_idle = mon.read()[1]
 
     import torch
@@ -268,7 +279,7 @@ def main():
         "tensor_parallel": tp, "kv_cache_dtype": kv, "quantization": "awq",
         "dtype": "float16", "max_model_len": MAX_CTX, "max_tokens": MAX_OUT,
         "temperature": 0.0, "seed": SEED, "gpu_memory_utilization": args.gpu_util,
-        "gpus": mon.gpu_names(), "vllm": vllm.__version__, "torch": torch.__version__,
+        "gpus": mon.gpu_names(), "gpu_indices": gpu_idx, "vllm": vllm.__version__, "torch": torch.__version__,
         "python": platform.python_version(),
     }
     try:
