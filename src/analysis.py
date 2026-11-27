@@ -95,7 +95,8 @@ def main():
             try:
                 import re
                 hits = re.findall(r"Model loading took ([0-9.]+) GiB", open(logp, errors="ignore").read())
-                m["weights_gib"] = float(hits[-1]) if hits else None
+                # con paralelismo tensorial cada GPU registra su parte de los pesos
+                m["weights_gib"] = float(hits[-1]) * m.get("tensor_parallel", 1) if hits else None
             except OSError:
                 m["weights_gib"] = None
             metas[m["model_key"]] = m
