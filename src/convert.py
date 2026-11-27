@@ -49,14 +49,37 @@ def _norm(line):
     return " ".join(line.split())
 
 
+def _indent(line):
+    return len(line) - len(line.lstrip(" \t"))
+
+
+def reindent(text, delta):
+    """Desplaza la sangria de todas las lineas no vacias en `delta` espacios."""
+    if delta == 0:
+        return text
+    out = []
+    for ln in text.splitlines(keepends=True):
+        if not ln.strip():
+            out.append(ln)
+        elif delta > 0:
+            out.append(" " * delta + ln)
+        else:
+            out.append(ln[min(-delta, _indent(ln)):])
+    return "".join(out)
+
+
 def locate(content, search):
-    """Devuelve (inicio, fin) en caracteres o una causa de fallo."""
+    """Devuelve (inicio, fin, delta_sangria) o una causa de fallo.
+
+    delta_sangria es 0 en coincidencia exacta; en la tolerante es la diferencia
+    entre la sangria del archivo y la del SEARCH en la primera linea no vacia,
+    que se aplica al REPLACE (re-indentacion relativa, ajuste tras el piloto)."""
     if not search.strip():
         return "search_not_found"
     n = content.count(search)
     if n == 1:
         i = content.index(search)
-        return i, i + len(search)
+        return i, i + len(search), 0
     if n > 1:
         return "search_ambiguous"
     # tolerante a espacios: compara linea a linea normalizando blancos
@@ -78,7 +101,8 @@ def locate(content, search):
         return "search_ambiguous"
     start = sum(len(l) for l in c_lines[:hits[0]])
     end = start + sum(len(l) for l in c_lines[hits[0]:hits[0] + k])
-    return start, end
+    delta = _indent(c_lines[hits[0]]) - _indent(s_lines[0])
+    return start, end, delta
 
 
 def _fix_eol(replace, original_chunk):
@@ -110,10 +134,12 @@ def to_diff(raw_output, path, content, repo_dir=None, finish_reason=None):
         if isinstance(loc, str):
             res["cause"] = loc
             return res
-        spans.append((loc[0], loc[1], replace))
+        if loc[2]:
+            res["reindented"] = True
+        spans.append((loc[0], loc[1], reindent(replace, loc[2])))
 
     spans.sort()
-    for (a0, a1, _), (b0, b1, _) in zip(spans, spans[1:]):
+    for (a0, a1, _), (b0, _b1, _) in zip(spans, spans[1:]):
         if b0 < a1:
             res["cause"] = "overlap"
             return res

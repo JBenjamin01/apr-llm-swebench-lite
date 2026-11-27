@@ -89,7 +89,8 @@ def cmd_prepare(a):
                 if not ok:
                     r.update(e2=False, cause="git_apply_failed", git_error=err)
             st.update(e1=r["e1"], e2=r["e2"], cause=r["cause"], diff=r["diff"],
-                      n_blocks=r["n_blocks"], git_error=r.get("git_error"))
+                      n_blocks=r["n_blocks"], git_error=r.get("git_error"),
+                      reindented=r.get("reindented", False))
             if r["e2"]:
                 preds.append({"instance_id": g["instance_id"],
                               "model_name_or_path": model,
@@ -146,7 +147,7 @@ def cmd_collect(a):
     rows = []
     for s in stages:
         g = gens[s["instance_id"]]
-        row = {k: s.get(k) for k in ("instance_id", "model", "e1", "e2", "cause")}
+        row = {k: s.get(k) for k in ("instance_id", "model", "e1", "e2", "cause", "reindented")}
         row.update({k: g.get(k) for k in (
             "repo", "prompt_tokens", "output_tokens", "file_tokens", "file_lines",
             "truncated", "gen_time_s", "energy_wh", "mean_power_w", "peak_mem_gb",
@@ -161,7 +162,9 @@ def cmd_collect(a):
             else:
                 row["e3"] = bool(h["applied"] and h["parsed_tests"] > 0)
                 if not row["e3"]:
-                    row["cause"] = "not_executable" if h["applied"] else "harness_apply_failed"
+                    # E2 ya verifico `git apply --check`: si el harness no logra ejecutar las
+                    # pruebas es porque el codigo parcheado no se ejecuta (sintaxis, importacion)
+                    row["cause"] = "not_executable"
                 else:
                     p2p_fail = set(h["p2p_fail"])
                     if p2p_fail and a.rerun_id:
